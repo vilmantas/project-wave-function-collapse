@@ -1,0 +1,57 @@
+[gd_scene load_steps=13 format=3 uid="uid://duro0j5d5qyp4"]
+
+[ext_resource type="Script" path="res://Main.cs" id="1_dait1"]
+[ext_resource type="Resource" uid="uid://cici70x73hnq5" path="res://wcf_tiles/tile-1-blank.res" id="2_k6p8g"]
+[ext_resource type="Script" path="res://CameraFreeLookController.cs" id="3_knhmc"]
+[ext_resource type="Resource" uid="uid://ml04ud4khhm0" path="res://wcf_tiles/tile-2-down.res" id="3_odmbn"]
+[ext_resource type="Resource" uid="uid://gjmcg1yh7l5s" path="res://wcf_tiles/tile-3-left.res" id="4_hgbni"]
+[ext_resource type="Resource" uid="uid://bqtywiqb4fvpn" path="res://wcf_tiles/tile-4-right.res" id="5_1kxq4"]
+[ext_resource type="Resource" uid="uid://c21dlqqpmttrs" path="res://wcf_tiles/tile-5-up.res" id="6_wtuyi"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_8utej"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_8ijky"]
+sky_material = SubResource("ProceduralSkyMaterial_8utej")
+
+[sub_resource type="Environment" id="Environment_8gr0y"]
+background_mode = 2
+sky = SubResource("Sky_8ijky")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_pr3rq"]
+size = Vector2(50, 50)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vaf80"]
+albedo_color = Color(0.180392, 0.392157, 0.207843, 1)
+metallic_specular = 0.0
+
+[node name="main" type="Node3D" node_paths=PackedStringArray("Container")]
+script = ExtResource("1_dait1")
+Tiles = Array[Object]([ExtResource("2_k6p8g"), ExtResource("3_odmbn"), ExtResource("4_hgbni"), ExtResource("5_1kxq4"), ExtResource("6_wtuyi")])
+GridSizeX = 5
+GridSizeY = 5
+Container = NodePath("container")
+
+[node name="environment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_8gr0y")
+
+[node name="light" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+shadow_enabled = true
+
+[node name="Node3D" type="Node3D" parent="." node_paths=PackedStringArray("Camera")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4937, 3.42636)
+script = ExtResource("3_knhmc")
+Camera = NodePath("camera")
+Speed = 12.0
+
+[node name="camera" type="Camera3D" parent="Node3D"]
+
+[node name="plane" type="MeshInstance3D" parent="."]
+mesh = SubResource("PlaneMesh_pr3rq")
+surface_material_override/0 = SubResource("StandardMaterial3D_vaf80")
+
+[node name="container" type="Node3D" parent="."]

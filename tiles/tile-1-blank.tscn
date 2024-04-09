@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3 uid="uid://8sis0rghniyo"]
+
+[ext_resource type="Texture2D" uid="uid://cy5dy47t7t0d8" path="res://textures/blank.png" id="1_1m74l"]
+[ext_resource type="Script" path="res://TileDebug.cs" id="1_vbjtb"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_i07qh"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u1reo"]
+albedo_texture = ExtResource("1_1m74l")
+
+[node name="tile" type="Node3D" node_paths=PackedStringArray("Label")]
+script = ExtResource("1_vbjtb")
+Label = NodePath("Label3D")
+
+[node name="model" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0.5, -0.5)
+mesh = SubResource("BoxMesh_i07qh")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_u1reo")
+
+[node name="Label3D" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.455133, 1.41084, -0.52119)
+text = "-"
