@@ -1,12 +1,14 @@
-[gd_scene load_steps=13 format=3 uid="uid://duro0j5d5qyp4"]
+[gd_scene load_steps=15 format=3 uid="uid://duro0j5d5qyp4"]
 
 [ext_resource type="Script" path="res://Main.cs" id="1_dait1"]
-[ext_resource type="Resource" uid="uid://cici70x73hnq5" path="res://wcf_tiles/tile-1-blank.res" id="2_k6p8g"]
+[ext_resource type="Resource" uid="uid://lks5ddtfawri" path="res://wcf_tiles/tile-1-blank.tres" id="2_n3n01"]
+[ext_resource type="Resource" uid="uid://cgmjevlvkh4k3" path="res://wcf_tiles/tile-2-cross.tres" id="3_dp2sf"]
 [ext_resource type="Script" path="res://CameraFreeLookController.cs" id="3_knhmc"]
-[ext_resource type="Resource" uid="uid://ml04ud4khhm0" path="res://wcf_tiles/tile-2-down.res" id="3_odmbn"]
-[ext_resource type="Resource" uid="uid://gjmcg1yh7l5s" path="res://wcf_tiles/tile-3-left.res" id="4_hgbni"]
-[ext_resource type="Resource" uid="uid://bqtywiqb4fvpn" path="res://wcf_tiles/tile-4-right.res" id="5_1kxq4"]
-[ext_resource type="Resource" uid="uid://c21dlqqpmttrs" path="res://wcf_tiles/tile-5-up.res" id="6_wtuyi"]
+[ext_resource type="Resource" uid="uid://b8oqfjlfokqc4" path="res://wcf_tiles/tile-3-end.tres" id="4_uehlo"]
+[ext_resource type="Resource" uid="uid://bu7tmgontd7lh" path="res://wcf_tiles/tile-4-straight.tres" id="5_856ea"]
+[ext_resource type="Resource" uid="uid://bajku7dqvlnr2" path="res://wcf_tiles/tile-5-t-cross.tres" id="6_waong"]
+[ext_resource type="Resource" uid="uid://c5ww063o6pi4q" path="res://wcf_tiles/tile-6-turn.tres" id="7_5w0jy"]
+[ext_resource type="PackedScene" uid="uid://8sis0rghniyo" path="res://tiles/tile-1-blank.tscn" id="9_4im6v"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_8utej"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -30,9 +32,9 @@ metallic_specular = 0.0
 
 [node name="main" type="Node3D" node_paths=PackedStringArray("Container")]
 script = ExtResource("1_dait1")
-Tiles = Array[Object]([ExtResource("2_k6p8g"), ExtResource("3_odmbn"), ExtResource("4_hgbni"), ExtResource("5_1kxq4"), ExtResource("6_wtuyi")])
-GridSizeX = 5
-GridSizeY = 5
+Tiles = Array[Object]([ExtResource("2_n3n01"), ExtResource("3_dp2sf"), ExtResource("4_uehlo"), ExtResource("5_856ea"), ExtResource("6_waong"), ExtResource("7_5w0jy")])
+GridSizeX = 3
+GridSizeY = 3
 Container = NodePath("container")
 
 [node name="environment" type="WorldEnvironment" parent="."]
@@ -55,3 +57,34 @@ mesh = SubResource("PlaneMesh_pr3rq")
 surface_material_override/0 = SubResource("StandardMaterial3D_vaf80")
 
 [node name="container" type="Node3D" parent="."]
+
+[node name="tile" parent="." instance=ExtResource("9_4im6v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.21728, 0, -1.16667)
+
+[node name="tile2" parent="." node_paths=PackedStringArray("Label") instance=ExtResource("9_4im6v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.21728, 0, -2.35328)
+Label = NodePath("../tile/Label3D")
+
+[node name="tile3" parent="." node_paths=PackedStringArray("Label") instance=ExtResource("9_4im6v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.21728, 0, -3.84323)
+Label = NodePath("../tile/Label3D")
+
+[node name="tile4" parent="." node_paths=PackedStringArray("Label") instance=ExtResource("9_4im6v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.21728, 0, -5.12691)
+Label = NodePath("../tile/Label3D")
+
+[node name="tile5" parent="." node_paths=PackedStringArray("Label") instance=ExtResource("9_4im6v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.37049, 0, -4.17037)
+Label = NodePath("../tile/Label3D")
+
+[node name="tile6" parent="." node_paths=PackedStringArray("Label") instance=ExtResource("9_4im6v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.06905, 0, -4.17037)
+Label = NodePath("../tile/Label3D")
+
+[node name="tile7" parent="." node_paths=PackedStringArray("Label") instance=ExtResource("9_4im6v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.17395, 0, -2.88351)
+Label = NodePath("../tile/Label3D")
+
+[node name="tile8" parent="." node_paths=PackedStringArray("Label") instance=ExtResource("9_4im6v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.22237, 0, -2.81402)
+Label = NodePath("../tile/Label3D")

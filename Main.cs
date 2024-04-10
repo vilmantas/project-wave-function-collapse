@@ -2,10 +2,12 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using WaveFunctionCollapse;
+using Node= WaveFunctionCollapse.Cell;
 
 public partial class Main : Node3D
 {
-    [Export] public WcfTile[] Tiles;
+    [Export] public GodotTile[] Tiles;
 
     [Export] public int GridSizeX = 2;
 
@@ -13,38 +15,140 @@ public partial class Main : Node3D
 
     [Export] public Node3D Container;
 
-    public override void _Input(InputEvent @event)
+    public bool Enabled = false;
+
+    public bool Paused;
+
+    private void Magic(Node cell)
     {
-	    if (Input.IsActionJustPressed("rotate"))
+	    if (cell == null) return;
+
+	    var validOptions = new List<string>();
+
+	    if (cell.Up != null)
 	    {
-		    DoMagic();
+		    validOptions = cell.Up.Options.Select(x => x.BottomConnectors).ToList();
+
+		    cell.Options.RemoveAll(x => !validOptions.Contains(x.TopConnectors));
+	    }
+
+	    if (cell.Down != null)
+	    {
+		    validOptions = cell.Down.Options.Select(x => x.TopConnectors).ToList();
+
+		    cell.Options.RemoveAll(x => !validOptions.Contains(x.BottomConnectors));
+	    }
+
+	    if (cell.Left != null)
+	    {
+		    validOptions = cell.Left.Options.Select(x => x.RightConnectors).ToList();
+
+		    cell.Options.RemoveAll(x => !validOptions.Contains(x.LeftConnectors));
+	    }
+
+	    if (cell.Right != null)
+	    {
+		    validOptions = cell.Right.Options.Select(x => x.LeftConnectors).ToList();
+
+		    cell.Options.RemoveAll(x => !validOptions.Contains(x.RightConnectors));
 	    }
     }
 
-    private WcfNode[][] Grid;
+    public override void _Process(double delta)
+    {
+	    if (Paused) return;
+
+	    if (Grid == null) return;
+
+	    var allNodes = new List<Node>();
+
+	    foreach (var row in Grid)
+	    {
+		    allNodes.AddRange(row);
+	    }
+
+	    if (allNodes.Any(x => !x.IsCollapsedOld))
+	    {
+		    ProcessGrid(Grid);
+
+		    // RenderGrid(Grid);
+	    }
+    }
+
+    public override void _Input(InputEvent @event)
+    {
+	    int randomSeed = 5;
+
+	    if (Input.IsActionJustPressed("generate"))
+	    {
+		    var random = new Random(randomSeed);
+
+		    Grid grid = new Grid(GridSizeX, GridSizeY,
+			    Tiles.Select(x => x.ToTile()).ToArray());
+
+		    var cell = grid[grid.Cells.Length / 2];
+
+		    cell.Left.Collapse(randomSeed);
+
+		    while (!grid.IsCollapsed)
+		    {
+			    var x = grid.LowestEntropyNodes();
+
+			    var randomNode = x[random.Next(x.Length)];
+
+			    if (randomNode.Entropy == 0) break;
+
+			    randomNode.Collapse(1);
+
+			    Magic(randomNode.Up);
+			    Magic(randomNode.Down);
+			    Magic(randomNode.Left);
+			    Magic(randomNode.Right);
+		    }
+
+		    RenderGrid(grid);
+	    }
+
+	    if (Input.IsActionJustPressed("pause"))
+	    {
+		    Paused = !Paused;
+	    }
+
+	    if (Input.IsActionJustPressed("clear"))
+	    {
+		    Grid = null;
+
+		    for(int i = 0; i < Container.GetChildCount(); i++)
+		    {
+			    Container.GetChild(i).QueueFree();
+		    }
+	    }
+    }
+
+    private Node[][] Grid;
 
     private void DoMagic()
 	{
 		Grid = GetEmptyGrid();
 
-		var allNodes = new List<WcfNode>();
+		var allNodes = new List<Node>();
 
 		foreach (var row in Grid)
 		{
 			allNodes.AddRange(row);
 		}
 
-		while (allNodes.Any(x => !x.IsCollapsed))
+		while (allNodes.Any(x => !x.IsCollapsedOld))
 		{
 			ProcessGrid(Grid);
 		}
 
-		RenderGrid(Grid);
+		// RenderGrid(Grid);
 	}
 
-	private void ProcessGrid(WcfNode[][] grid)
+	private void ProcessGrid(Node[][] grid)
 	{
-		var allNodes = new List<WcfNode>();
+		var allNodes = new List<Node>();
 
 		foreach (var row in Grid)
 		{
@@ -53,14 +157,13 @@ public partial class Main : Node3D
 
 		var random = new Random();
 
-		allNodes = allNodes.Where(x => !x.IsCollapsed).OrderBy(x => x.Options.Count).ToList();
+		allNodes = allNodes.Where(x => !x.IsCollapsedOld).OrderBy(x => x.OptionsOld.Count).ToList();
 
-		allNodes = allNodes.Where(x => x.Options.Count == allNodes[0].Options.Count).ToList();
+		allNodes = allNodes.Where(x => x.OptionsOld.Count == allNodes[0].OptionsOld.Count).ToList();
 
 		var randomNode = allNodes[random.Next(allNodes.Count)];
 
-		randomNode.IsCollapsed = true;
-		randomNode.Options = new List<WcfTile> { randomNode.Options[random.Next(randomNode.Options.Count)] };
+		randomNode.Collapse();
 
 		for (int y = 0; y < grid.Length; y++)
 		{
@@ -68,19 +171,19 @@ public partial class Main : Node3D
 			{
 				var node = grid[y][xx];
 
-				if (node.IsCollapsed) continue;
+				if (node.IsCollapsedOld) continue;
 
 				var upperNode = y > 0 ? grid[y - 1][xx] : null;
 
 				if (upperNode != null)
 				{
 					var validOptions = new List<string>();
-					foreach (var opt in upperNode.Options)
+					foreach (var opt in upperNode.OptionsOld)
 					{
-						var valid = opt.Down.Select(x => x.ResourcePath);
+						var valid = new List<string>();//opt.Down.Select(x => x.ResourcePath);
 						validOptions.AddRange(valid);
 					}
-					node.Options.RemoveAll(x => !validOptions.Contains(x.Tile.ResourcePath));
+					node.OptionsOld.RemoveAll(x => !validOptions.Contains(x.Prefab.ResourcePath));
 				}
 
 				var leftNode = xx > 0 ? grid[y][xx - 1] : null;
@@ -88,12 +191,12 @@ public partial class Main : Node3D
 				if (leftNode != null)
 				{
 					var validOptions = new List<string>();
-					foreach (var opt in leftNode.Options)
+					foreach (var opt in leftNode.OptionsOld)
 					{
-						var valid = opt.Right.Select(x => x.ResourcePath);
+						var valid = new List<string>();//opt.Right.Select(x => x.ResourcePath);
 						validOptions.AddRange(valid);
 					}
-					node.Options.RemoveAll(x => !validOptions.Contains(x.Tile.ResourcePath));
+					node.OptionsOld.RemoveAll(x => !validOptions.Contains(x.Prefab.ResourcePath));
 				}
 
 				var rightNode = xx < grid[y].Length - 1 ? grid[y][xx + 1] : null;
@@ -101,12 +204,12 @@ public partial class Main : Node3D
 				if (rightNode != null)
 				{
 					var validOptions = new List<string>();
-					foreach (var opt in rightNode.Options)
+					foreach (var opt in rightNode.OptionsOld)
 					{
-						var valid = opt.Left.Select(x => x.ResourcePath);
+						var valid = new List<string>();//opt.Left.Select(x => x.ResourcePath);
 						validOptions.AddRange(valid);
 					}
-					node.Options.RemoveAll(x => !validOptions.Contains(x.Tile.ResourcePath));
+					node.OptionsOld.RemoveAll(x => !validOptions.Contains(x.Prefab.ResourcePath));
 				}
 
 
@@ -115,44 +218,37 @@ public partial class Main : Node3D
 				if (downNode != null)
 				{
 					var validOptions = new List<string>();
-					foreach (var opt in downNode.Options)
+					foreach (var opt in downNode.OptionsOld)
 					{
-						var valid = opt.Top.Select(x => x.ResourcePath);
+						var valid = new List<string>();//opt.Top.Select(x => x.ResourcePath);
 						validOptions.AddRange(valid);
 					}
-					node.Options.RemoveAll(x => !validOptions.Contains(x.Tile.ResourcePath));
+					node.OptionsOld.RemoveAll(x => !validOptions.Contains(x.Prefab.ResourcePath));
 				}
 			}
 		}
 	}
 
-	private void CleanOptions(List<WcfTile> options, string[] validOptions)
+	private Node[][] GetEmptyGrid()
 	{
-		// options.RemoveAll(x => !validOptions.Contains(x.Tile.ResourcePath));
-
-
-	}
-
-	private WcfNode[][] GetEmptyGrid()
-	{
-		WcfNode[][] grid = new WcfNode[GridSizeY][];
+		Node[][] grid = new Node[GridSizeY][];
 
 		for (var x = 0; x < GridSizeY; x++)
 		{
-			var row = new WcfNode[GridSizeX];
+			var row = new Node[GridSizeX];
 			grid[x] = row;
 
 			for (var i = 0; i < GridSizeX; i++)
 			{
-				var node = new WcfNode();
+				var node = new Node();
 
-				node.IsCollapsed = false;
+				node.IsCollapsedOld = false;
 
-				node.Options = new List<WcfTile>();
+				node.OptionsOld = new List<GodotTile>();
 
 				foreach (var origTile in Tiles)
 				{
-					node.Options.Add(origTile);
+					node.OptionsOld.Add(origTile);
 				}
 
 				row[i] = node;
@@ -162,38 +258,35 @@ public partial class Main : Node3D
 		return grid;
 	}
 
-	private void RenderGrid(WcfNode[][] grid)
+	private void RenderGrid(Grid grid)
 	{
 		for(int i = 0; i < Container.GetChildCount(); i++)
 		{
 			Container.GetChild(i).QueueFree();
 		}
 
-		for (var x = 0; x < GridSizeY; x++)
+		foreach (var node in grid.Cells)
 		{
-			for (var i = 0; i < GridSizeX; i++)
+			if (!node.IsCollapsed)
 			{
-				var node = grid[x][i];
+				var t = Tiles[0].Prefab.Instantiate<TileDebug>();
+				Container.AddChild(t);
 
-				if (!node.IsCollapsed)
-				{
-					var t = Tiles[0].Tile.Instantiate<TileDebug>();
-					Container.AddChild(t);
+				t.ValidOptions = node.Entropy;
+				t.X = node.X;
+				t.Y = node.Y;
 
-					t.ValidOptions = node.Options.Count;
+				t.GlobalPosition = new Vector3(node.X, 0, -node.Y);
+			}
+			else
+			{
+				var tile = FindTile(node.Options[0].Name).Prefab.Instantiate<Node3D>();
+				Container.AddChild(tile);
 
-					t.GlobalPosition = new Vector3(i, 0, x);
-				}
-				else
-				{
-					var tile = node.Options[0].Tile.Instantiate<Node3D>();
-					Container.AddChild(tile);
-
-					tile.GlobalPosition = new Vector3(i, 0, x);
-				}
-
-
+				tile.GlobalPosition = new Vector3(node.X, 0, -node.Y);
 			}
 		}
 	}
+
+	private GodotTile FindTile(string name) => Tiles.First(x => x.Prefab.ResourcePath == name);
 }

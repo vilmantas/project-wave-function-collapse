@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="GodotTile" load_steps=3 format=3 uid="uid://cgmjevlvkh4k3"]
+
+[ext_resource type="PackedScene" uid="uid://beso75f7xvyae" path="res://tiles/tile-2-cross.tscn" id="1_v5aih"]
+[ext_resource type="Script" path="res://WaveFunctionCollapse/GodotTile.cs" id="2_6svon"]
+
+[resource]
+script = ExtResource("2_6svon")
+Prefab = ExtResource("1_v5aih")
+TopConnectors = "ABA"
+RightConnectors = "ABA"
+BottomConnectors = "ABA"
+LeftConnectors = "ABA"

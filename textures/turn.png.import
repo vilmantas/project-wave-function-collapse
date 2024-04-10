@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cy5dy47t7t0d8"
-path.s3tc="res://.godot/imported/blank.png-c01b3bfe55bc48d9dbcbf1f585c4ade9.s3tc.ctex"
+uid="uid://b656hkf88xicq"
+path.s3tc="res://.godot/imported/turn.png-0648a391083139d9d4350a5b570422a2.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://textures/blank.png"
-dest_files=["res://.godot/imported/blank.png-c01b3bfe55bc48d9dbcbf1f585c4ade9.s3tc.ctex"]
+source_file="res://textures/turn.png"
+dest_files=["res://.godot/imported/turn.png-0648a391083139d9d4350a5b570422a2.s3tc.ctex"]
 
 [params]
 
