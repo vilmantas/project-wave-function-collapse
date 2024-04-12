@@ -1,13 +1,8 @@
-[gd_scene load_steps=15 format=3 uid="uid://duro0j5d5qyp4"]
+[gd_scene load_steps=10 format=3 uid="uid://duro0j5d5qyp4"]
 
 [ext_resource type="Script" path="res://Main.cs" id="1_dait1"]
-[ext_resource type="Resource" uid="uid://lks5ddtfawri" path="res://wcf_tiles/tile-1-blank.tres" id="2_n3n01"]
-[ext_resource type="Resource" uid="uid://cgmjevlvkh4k3" path="res://wcf_tiles/tile-2-cross.tres" id="3_dp2sf"]
+[ext_resource type="Resource" uid="uid://nrfa1sf5re45" path="res://wcf_tiles/AllTiles.tres" id="2_c4t7e"]
 [ext_resource type="Script" path="res://CameraFreeLookController.cs" id="3_knhmc"]
-[ext_resource type="Resource" uid="uid://b8oqfjlfokqc4" path="res://wcf_tiles/tile-3-end.tres" id="4_uehlo"]
-[ext_resource type="Resource" uid="uid://bu7tmgontd7lh" path="res://wcf_tiles/tile-4-straight.tres" id="5_856ea"]
-[ext_resource type="Resource" uid="uid://bajku7dqvlnr2" path="res://wcf_tiles/tile-5-t-cross.tres" id="6_waong"]
-[ext_resource type="Resource" uid="uid://c5ww063o6pi4q" path="res://wcf_tiles/tile-6-turn.tres" id="7_5w0jy"]
 [ext_resource type="PackedScene" uid="uid://8sis0rghniyo" path="res://tiles/tile-1-blank.tscn" id="9_4im6v"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_8utej"]
@@ -32,9 +27,9 @@ metallic_specular = 0.0
 
 [node name="main" type="Node3D" node_paths=PackedStringArray("Container")]
 script = ExtResource("1_dait1")
-Tiles = Array[Object]([ExtResource("2_n3n01"), ExtResource("3_dp2sf"), ExtResource("4_uehlo"), ExtResource("5_856ea"), ExtResource("6_waong"), ExtResource("7_5w0jy")])
-GridSizeX = 3
-GridSizeY = 3
+Configuration = ExtResource("2_c4t7e")
+GridSizeX = 15
+GridSizeY = 15
 Container = NodePath("container")
 
 [node name="environment" type="WorldEnvironment" parent="."]

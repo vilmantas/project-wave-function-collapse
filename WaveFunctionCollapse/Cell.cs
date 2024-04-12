@@ -1,11 +1,13 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace WaveFunctionCollapse
 {
 	public class Cell
 	{
+		public Random Random { get; set; } = new Random();
 		public int X { get; init; }
 		public int Y { get; init; }
 		public Cell Up { get; set; }
@@ -14,10 +16,6 @@ namespace WaveFunctionCollapse
 		public Cell Left { get; set; }
 		public List<Tile> Options { get; set; }
 
-		public bool IsCollapsedOld { get; set; }
-		public List<GodotTile> OptionsOld { get; set; }
-
-
 		public int Entropy => Options.Count;
 		public bool IsCollapsed => Options.Count == 1;
 
@@ -25,18 +23,24 @@ namespace WaveFunctionCollapse
 		{
 			if (IsCollapsed) return;
 
-			var random = new Random();
+			var tickets = Options.Sum(x => x.Weight);
 
-			Options = new List<Tile> { Options[random.Next(Options.Count)] };
-		}
+			var roll = Random.Next(1, tickets);
 
-		public void Collapse(int seed)
-		{
-			if (IsCollapsed) return;
+			var sum = 0;
 
-			var random = new Random(seed);
+			foreach (var option in Options)
+			{
+				sum += option.Weight;
 
-			Options = new List<Tile> { Options[random.Next(Options.Count)] };
+				if (roll <= sum)
+				{
+					Options = new List<Tile> { option };
+					break;
+				}
+			}
+
+			Options = new List<Tile> { Options[Random.Next(Options.Count)] };
 		}
 	}
 }

@@ -7,7 +7,9 @@ using Node= WaveFunctionCollapse.Cell;
 
 public partial class Main : Node3D
 {
-    [Export] public GodotTile[] Tiles;
+	public GodotTile[] Tiles;
+
+    [Export] public GodotTiles Configuration;
 
     [Export] public int GridSizeX = 2;
 
@@ -19,76 +21,76 @@ public partial class Main : Node3D
 
     public bool Paused;
 
-    private void Magic(Node cell)
+    public override void _Ready()
     {
-	    if (cell == null) return;
+	    Tiles = Configuration.Tiles;
 
-	    var validOptions = new List<string>();
+	    var iterations = Tiles.Length;
 
-	    if (cell.Up != null)
+	    var newTiles = Tiles.ToList();
+
+	    for (int i = 0; i < iterations; i++)
 	    {
-		    validOptions = cell.Up.Options.Select(x => x.BottomConnectors).ToList();
+		    var godotTile = Tiles[i];
 
-		    cell.Options.RemoveAll(x => !validOptions.Contains(x.TopConnectors));
+		    if (!godotTile.GenerateRotations) continue;
+
+		    newTiles.AddRange(AppendRotations(godotTile));
 	    }
 
-	    if (cell.Down != null)
-	    {
-		    validOptions = cell.Down.Options.Select(x => x.TopConnectors).ToList();
+	    Tiles = newTiles.ToArray();
+    }
 
-		    cell.Options.RemoveAll(x => !validOptions.Contains(x.BottomConnectors));
+    private List<GodotTile> AppendRotations(GodotTile tile)
+    {
+	    var result = new List<GodotTile>();
+
+	    var connections = new List<string>()
+	    {
+		    tile.TopConnectors, tile.RightConnectors,
+		    tile.BottomConnectors, tile.LeftConnectors
+	    };
+
+	    for (int i = 1; i < 4; i++)
+	    {
+		    var lastElement = connections[^1];
+		    connections.RemoveAt(connections.Count - 1);
+		    connections.Insert(0, lastElement);
+
+		    var x = new GodotTile();
+
+		    x.TopConnectors = connections[0];
+		    x.RightConnectors = connections[1];
+		    x.BottomConnectors = connections[2];
+		    x.LeftConnectors = connections[3];
+
+		    x.Rotation = i;
+		    x.Prefab = tile.Prefab;
+		    x.GenerateRotations = false;
+		    x.Weight = tile.Weight;
+
+		    result.Add(x);
 	    }
 
-	    if (cell.Left != null)
-	    {
-		    validOptions = cell.Left.Options.Select(x => x.RightConnectors).ToList();
-
-		    cell.Options.RemoveAll(x => !validOptions.Contains(x.LeftConnectors));
-	    }
-
-	    if (cell.Right != null)
-	    {
-		    validOptions = cell.Right.Options.Select(x => x.LeftConnectors).ToList();
-
-		    cell.Options.RemoveAll(x => !validOptions.Contains(x.RightConnectors));
-	    }
+	    return result;
     }
 
     public override void _Process(double delta)
     {
 	    if (Paused) return;
 
-	    if (Grid == null) return;
-
-	    var allNodes = new List<Node>();
-
-	    foreach (var row in Grid)
-	    {
-		    allNodes.AddRange(row);
-	    }
-
-	    if (allNodes.Any(x => !x.IsCollapsedOld))
-	    {
-		    ProcessGrid(Grid);
-
-		    // RenderGrid(Grid);
-	    }
     }
 
     public override void _Input(InputEvent @event)
     {
-	    int randomSeed = 5;
+	    int randomSeed = 2;
 
 	    if (Input.IsActionJustPressed("generate"))
 	    {
-		    var random = new Random(randomSeed);
+		    var random = new Random();
 
 		    Grid grid = new Grid(GridSizeX, GridSizeY,
 			    Tiles.Select(x => x.ToTile()).ToArray());
-
-		    var cell = grid[grid.Cells.Length / 2];
-
-		    cell.Left.Collapse(randomSeed);
 
 		    while (!grid.IsCollapsed)
 		    {
@@ -98,12 +100,9 @@ public partial class Main : Node3D
 
 			    if (randomNode.Entropy == 0) break;
 
-			    randomNode.Collapse(1);
+			    randomNode.Collapse();
 
-			    Magic(randomNode.Up);
-			    Magic(randomNode.Down);
-			    Magic(randomNode.Left);
-			    Magic(randomNode.Right);
+			    SimpleNeighbourValidator.Process(randomNode);
 		    }
 
 		    RenderGrid(grid);
@@ -116,147 +115,12 @@ public partial class Main : Node3D
 
 	    if (Input.IsActionJustPressed("clear"))
 	    {
-		    Grid = null;
-
 		    for(int i = 0; i < Container.GetChildCount(); i++)
 		    {
 			    Container.GetChild(i).QueueFree();
 		    }
 	    }
     }
-
-    private Node[][] Grid;
-
-    private void DoMagic()
-	{
-		Grid = GetEmptyGrid();
-
-		var allNodes = new List<Node>();
-
-		foreach (var row in Grid)
-		{
-			allNodes.AddRange(row);
-		}
-
-		while (allNodes.Any(x => !x.IsCollapsedOld))
-		{
-			ProcessGrid(Grid);
-		}
-
-		// RenderGrid(Grid);
-	}
-
-	private void ProcessGrid(Node[][] grid)
-	{
-		var allNodes = new List<Node>();
-
-		foreach (var row in Grid)
-		{
-			allNodes.AddRange(row);
-		}
-
-		var random = new Random();
-
-		allNodes = allNodes.Where(x => !x.IsCollapsedOld).OrderBy(x => x.OptionsOld.Count).ToList();
-
-		allNodes = allNodes.Where(x => x.OptionsOld.Count == allNodes[0].OptionsOld.Count).ToList();
-
-		var randomNode = allNodes[random.Next(allNodes.Count)];
-
-		randomNode.Collapse();
-
-		for (int y = 0; y < grid.Length; y++)
-		{
-			for (int xx = 0; xx < grid[y].Length; xx++)
-			{
-				var node = grid[y][xx];
-
-				if (node.IsCollapsedOld) continue;
-
-				var upperNode = y > 0 ? grid[y - 1][xx] : null;
-
-				if (upperNode != null)
-				{
-					var validOptions = new List<string>();
-					foreach (var opt in upperNode.OptionsOld)
-					{
-						var valid = new List<string>();//opt.Down.Select(x => x.ResourcePath);
-						validOptions.AddRange(valid);
-					}
-					node.OptionsOld.RemoveAll(x => !validOptions.Contains(x.Prefab.ResourcePath));
-				}
-
-				var leftNode = xx > 0 ? grid[y][xx - 1] : null;
-
-				if (leftNode != null)
-				{
-					var validOptions = new List<string>();
-					foreach (var opt in leftNode.OptionsOld)
-					{
-						var valid = new List<string>();//opt.Right.Select(x => x.ResourcePath);
-						validOptions.AddRange(valid);
-					}
-					node.OptionsOld.RemoveAll(x => !validOptions.Contains(x.Prefab.ResourcePath));
-				}
-
-				var rightNode = xx < grid[y].Length - 1 ? grid[y][xx + 1] : null;
-
-				if (rightNode != null)
-				{
-					var validOptions = new List<string>();
-					foreach (var opt in rightNode.OptionsOld)
-					{
-						var valid = new List<string>();//opt.Left.Select(x => x.ResourcePath);
-						validOptions.AddRange(valid);
-					}
-					node.OptionsOld.RemoveAll(x => !validOptions.Contains(x.Prefab.ResourcePath));
-				}
-
-
-				var downNode = y < grid.Length - 1 ? grid[y + 1][xx] : null;
-
-				if (downNode != null)
-				{
-					var validOptions = new List<string>();
-					foreach (var opt in downNode.OptionsOld)
-					{
-						var valid = new List<string>();//opt.Top.Select(x => x.ResourcePath);
-						validOptions.AddRange(valid);
-					}
-					node.OptionsOld.RemoveAll(x => !validOptions.Contains(x.Prefab.ResourcePath));
-				}
-			}
-		}
-	}
-
-	private Node[][] GetEmptyGrid()
-	{
-		Node[][] grid = new Node[GridSizeY][];
-
-		for (var x = 0; x < GridSizeY; x++)
-		{
-			var row = new Node[GridSizeX];
-			grid[x] = row;
-
-			for (var i = 0; i < GridSizeX; i++)
-			{
-				var node = new Node();
-
-				node.IsCollapsedOld = false;
-
-				node.OptionsOld = new List<GodotTile>();
-
-				foreach (var origTile in Tiles)
-				{
-					node.OptionsOld.Add(origTile);
-				}
-
-				row[i] = node;
-			}
-		}
-
-		return grid;
-	}
 
 	private void RenderGrid(Grid grid)
 	{
@@ -281,9 +145,22 @@ public partial class Main : Node3D
 			else
 			{
 				var tile = FindTile(node.Options[0].Name).Prefab.Instantiate<Node3D>();
+
+				if (tile is TileDebug debugTile)
+				{
+					debugTile.ValidOptions = 1;
+					debugTile.X = node.X;
+					debugTile.Y = node.Y;
+					debugTile.Up = node.Up != null;
+					debugTile.Right = node.Right != null;
+					debugTile.Down = node.Down != null;
+					debugTile.Left = node.Left != null;
+				}
+
 				Container.AddChild(tile);
 
 				tile.GlobalPosition = new Vector3(node.X, 0, -node.Y);
+				tile.RotationDegrees = new Vector3(0, -90 * node.Options[0].Rotation, 0);
 			}
 		}
 	}

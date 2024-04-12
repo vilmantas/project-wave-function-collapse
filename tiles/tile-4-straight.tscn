@@ -12,22 +12,22 @@ albedo_texture = ExtResource("1_pca1n")
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_k8h4j"]
 
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_k4a71"]
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_po8h7"]
 load_path = "res://.godot/imported/right.png-e122832cc9263862c5ad77cfe653aeca.s3tc.ctex"
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7mxwm"]
-albedo_texture = SubResource("CompressedTexture2D_k4a71")
+albedo_texture = SubResource("CompressedTexture2D_po8h7")
 
 [node name="tile" type="Node3D"]
 
 [node name="model" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0.5, -0.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 mesh = SubResource("BoxMesh_i07qh")
 skeleton = NodePath("../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_23am3")
 
 [node name="tile" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0.5, 1.01, -0.5)
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 1.01, 0)
 material_override = SubResource("StandardMaterial3D_3pcsy")
 mesh = SubResource("PlaneMesh_k8h4j")
 surface_material_override/0 = SubResource("StandardMaterial3D_7mxwm")

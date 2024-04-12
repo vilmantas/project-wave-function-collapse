@@ -10,3 +10,5 @@ TopConnectors = "ABA"
 RightConnectors = "AAA"
 BottomConnectors = "ABA"
 LeftConnectors = "AAA"
+GenerateRotations = true
+Weight = 6

@@ -1,5 +1,6 @@
-[gd_scene load_steps=7 format=3 uid="uid://c2pjbxoidvf1a"]
+[gd_scene load_steps=8 format=3 uid="uid://c2pjbxoidvf1a"]
 
+[ext_resource type="Script" path="res://TileDebug.cs" id="1_plmx7"]
 [ext_resource type="Texture2D" uid="uid://dy54xf31wiphc" path="res://textures/end.png" id="1_rsss6"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_i07qh"]
@@ -15,16 +16,22 @@ albedo_texture = ExtResource("1_rsss6")
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r517b"]
 albedo_texture = ExtResource("1_rsss6")
 
-[node name="tile" type="Node3D"]
+[node name="tile" type="Node3D" node_paths=PackedStringArray("Label")]
+script = ExtResource("1_plmx7")
+Label = NodePath("Label3D")
+
+[node name="Label3D" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.41084, 0)
+text = "-"
 
 [node name="model" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0.5, -0.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 mesh = SubResource("BoxMesh_i07qh")
 skeleton = NodePath("../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_chhun")
 
 [node name="tile" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0.5, 1.01, -0.5)
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 1.01, 0)
 material_override = SubResource("StandardMaterial3D_nioeo")
 mesh = SubResource("PlaneMesh_gt1jh")
 surface_material_override/0 = SubResource("StandardMaterial3D_r517b")

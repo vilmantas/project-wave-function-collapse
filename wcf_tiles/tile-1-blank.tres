@@ -10,3 +10,5 @@ TopConnectors = "AAA"
 RightConnectors = "AAA"
 BottomConnectors = "AAA"
 LeftConnectors = "AAA"
+GenerateRotations = false
+Weight = 40

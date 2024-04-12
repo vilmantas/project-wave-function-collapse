@@ -1,6 +1,6 @@
-[gd_scene load_steps=7 format=3 uid="uid://beso75f7xvyae"]
+[gd_scene load_steps=6 format=3 uid="uid://beso75f7xvyae"]
 
-[ext_resource type="Texture2D" uid="uid://btm0crjmn3peu" path="res://textures/cross.png" id="1_37t0s"]
+[ext_resource type="Texture2D" uid="uid://btm0crjmn3peu" path="res://textures/cross.png" id="2_jh14e"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_i07qh"]
 
@@ -8,24 +8,21 @@
 albedo_color = Color(0, 0, 1, 1)
 albedo_texture_force_srgb = true
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3lvp4"]
-albedo_texture = ExtResource("1_37t0s")
+[sub_resource type="PlaneMesh" id="PlaneMesh_8ymtl"]
+size = Vector2(1, 1)
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_h2p6l"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sgn1i"]
-albedo_texture = ExtResource("1_37t0s")
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2quri"]
+albedo_texture = ExtResource("2_jh14e")
 
 [node name="tile" type="Node3D"]
 
 [node name="model" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0.5, -0.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 mesh = SubResource("BoxMesh_i07qh")
 skeleton = NodePath("../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_yu7em")
 
 [node name="tile" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0.5, 1.01, -0.5)
-material_override = SubResource("StandardMaterial3D_3lvp4")
-mesh = SubResource("PlaneMesh_h2p6l")
-surface_material_override/0 = SubResource("StandardMaterial3D_sgn1i")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.01, 0)
+mesh = SubResource("PlaneMesh_8ymtl")
+surface_material_override/0 = SubResource("StandardMaterial3D_2quri")

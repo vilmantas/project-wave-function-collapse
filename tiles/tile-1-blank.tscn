@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://8sis0rghniyo"]
 
 [ext_resource type="Script" path="res://TileDebug.cs" id="1_vbjtb"]
-[ext_resource type="Texture2D" uid="uid://bx2w85l307vqr" path="res://textures/blank-green.png" id="2_15pbv"]
+[ext_resource type="Texture2D" uid="uid://bx2w85l307vqr" path="res://textures/blank-green.png" id="3_1h15w"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_i07qh"]
 
@@ -11,26 +11,27 @@ load_path = "res://.godot/imported/blank.png-c01b3bfe55bc48d9dbcbf1f585c4ade9.s3
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u1reo"]
 albedo_texture = SubResource("CompressedTexture2D_kdh3r")
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_wnw8k"]
+[sub_resource type="PlaneMesh" id="PlaneMesh_22xnu"]
+size = Vector2(1, 1)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_j3xsu"]
-albedo_texture = ExtResource("2_15pbv")
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_oq4mr"]
+albedo_texture = ExtResource("3_1h15w")
 
 [node name="tile" type="Node3D" node_paths=PackedStringArray("Label")]
 script = ExtResource("1_vbjtb")
 Label = NodePath("Label3D")
 
 [node name="model" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0.5, -0.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 mesh = SubResource("BoxMesh_i07qh")
 skeleton = NodePath("../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_u1reo")
 
 [node name="Label3D" type="Label3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.455133, 1.41084, -0.52119)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.41084, 0)
 text = "-"
 
 [node name="tile" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0.5, 1.01, -0.5)
-mesh = SubResource("PlaneMesh_wnw8k")
-surface_material_override/0 = SubResource("StandardMaterial3D_j3xsu")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.01, 0)
+mesh = SubResource("PlaneMesh_22xnu")
+surface_material_override/0 = SubResource("StandardMaterial3D_oq4mr")

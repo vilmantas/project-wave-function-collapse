@@ -10,3 +10,4 @@ TopConnectors = "ABA"
 RightConnectors = "ABA"
 BottomConnectors = "ABA"
 LeftConnectors = "ABA"
+GenerateRotations = false

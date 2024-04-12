@@ -10,3 +10,4 @@ TopConnectors = "AAA"
 RightConnectors = "AAA"
 BottomConnectors = "ABA"
 LeftConnectors = "AAA"
+GenerateRotations = true

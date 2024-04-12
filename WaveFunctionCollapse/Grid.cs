@@ -74,9 +74,9 @@ public class Grid
             {
                 var cell = this[x, y];
 
-                cell.Up = y > 0 ? Cells[x, y - 1] : null;
+                cell.Down = y > 0 ? Cells[x, y - 1] : null;
                 cell.Right = x < Cells.GetLength(0) - 1 ? Cells[x + 1, y] : null;
-                cell.Down = y < Cells.GetLength(1) - 1 ? Cells[x, y + 1] : null;
+                cell.Up = y < Cells.GetLength(1) - 1 ? Cells[x, y + 1] : null;
                 cell.Left = x > 0 ? Cells[x - 1, y] : null;
             }
         }
