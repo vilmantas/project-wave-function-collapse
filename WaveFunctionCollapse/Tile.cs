@@ -9,4 +9,7 @@ public class Tile
     public string LeftConnectors;
     public int Rotation;
     public int Weight = 1;
+
+    public bool LimitEnabled;
+    public int Limit;
 }

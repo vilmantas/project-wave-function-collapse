@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="GodotTile" load_steps=3 format=3 uid="uid://bbd3or1c5eywm"]
+
+[ext_resource type="PackedScene" uid="uid://8gx2283uq6jv" path="res://tiles/tile-7-spawn.tscn" id="1_2wv5b"]
+[ext_resource type="Script" path="res://WaveFunctionCollapse.Godot/GodotTile.cs" id="2_2hso6"]
+
+[resource]
+script = ExtResource("2_2hso6")
+Prefab = ExtResource("1_2wv5b")
+TopConnectors = "AAA"
+RightConnectors = "AAA"
+BottomConnectors = "ABA"
+LeftConnectors = "AAA"
+GenerateRotations = false
+LimitEnabled = true
+Limit = 1
+Weight = 1

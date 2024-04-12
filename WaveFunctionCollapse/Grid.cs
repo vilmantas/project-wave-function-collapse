@@ -52,6 +52,8 @@ public class Grid
 
     public Cell[] ProcessableCells() => Cells.Cast<Cell>().Where(x => !x.IsCollapsed).ToArray();
 
+    public Cell[] CollapsedCells() => Cells.Cast<Cell>().Where(x => x.IsCollapsed).ToArray();
+
     private void InitializeEmptyGrid()
     {
         for (int i = 0; i < Cells.Length; i++)

@@ -12,6 +12,9 @@ public partial class GodotTile : Resource
     [Export] public string LeftConnectors;
     [Export] public bool GenerateRotations;
 
+    [Export] public bool LimitEnabled;
+    [Export] public int Limit = 1;
+
     public int RotationY;
 
     [Export] public int Weight { get; set; } = 1;
@@ -27,6 +30,25 @@ public partial class GodotTile : Resource
             LeftConnectors = LeftConnectors,
             Rotation = RotationY,
             Weight = Weight,
+            Limit = Limit,
+            LimitEnabled = LimitEnabled,
+        };
+    }
+
+    public GodotTile Copy()
+    {
+        return new GodotTile
+        {
+            Prefab = Prefab,
+            TopConnectors = TopConnectors,
+            RightConnectors = RightConnectors,
+            BottomConnectors = BottomConnectors,
+            LeftConnectors = LeftConnectors,
+            GenerateRotations = GenerateRotations,
+            RotationY = RotationY,
+            Weight = Weight,
+            Limit = Limit,
+            LimitEnabled = LimitEnabled,
         };
     }
 }

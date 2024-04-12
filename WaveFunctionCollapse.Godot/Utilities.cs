@@ -32,17 +32,13 @@ public static class Utilities
             connections.RemoveAt(connections.Count - 1);
             connections.Insert(0, lastElement);
 
-            var rotatedTile = new GodotTile()
-            {
-                TopConnectors = connections[0],
-                RightConnectors = connections[1],
-                BottomConnectors = connections[2],
-                LeftConnectors = connections[3],
-                RotationY = i * 90,
-                Prefab = tile.Prefab,
-                GenerateRotations = false,
-                Weight = tile.Weight,
-            };
+            var rotatedTile = tile.Copy();
+
+            rotatedTile.TopConnectors = connections[0];
+            rotatedTile.RightConnectors = connections[1];
+            rotatedTile.BottomConnectors = connections[2];
+            rotatedTile.LeftConnectors = connections[3];
+            rotatedTile.RotationY = i * 90;
 
             result.Add(rotatedTile);
         }

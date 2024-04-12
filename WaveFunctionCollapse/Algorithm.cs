@@ -17,6 +17,8 @@ public static class Algorithm
             cell.Collapse();
 
             SimpleNeighbourValidator.Process(cell);
+
+            LimitStrategy.Process(grid);
         }
 
         return true;

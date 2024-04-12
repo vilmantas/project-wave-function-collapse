@@ -1,12 +1,13 @@
-[gd_resource type="Resource" script_class="GodotTiles" load_steps=7 format=3 uid="uid://nrfa1sf5re45"]
+[gd_resource type="Resource" script_class="GodotTiles" load_steps=8 format=3 uid="uid://nrfa1sf5re45"]
 
 [ext_resource type="Resource" uid="uid://lks5ddtfawri" path="res://wcf_tiles/tile-1-blank.tres" id="1_cj5ax"]
-[ext_resource type="Script" path="res://WaveFunctionCollapse.Godot/GodotTiles.cs" id="1_tvook"]
 [ext_resource type="Resource" uid="uid://cgmjevlvkh4k3" path="res://wcf_tiles/tile-2-cross.tres" id="2_5rfth"]
 [ext_resource type="Resource" uid="uid://bu7tmgontd7lh" path="res://wcf_tiles/tile-4-straight.tres" id="4_3p641"]
 [ext_resource type="Resource" uid="uid://bajku7dqvlnr2" path="res://wcf_tiles/tile-5-t-cross.tres" id="5_tp0sl"]
 [ext_resource type="Resource" uid="uid://c5ww063o6pi4q" path="res://wcf_tiles/tile-6-turn.tres" id="6_e0bei"]
+[ext_resource type="Resource" uid="uid://bbd3or1c5eywm" path="res://wcf_tiles/tile-7-spawn.tres" id="6_mbqv6"]
+[ext_resource type="Script" path="res://WaveFunctionCollapse.Godot/GodotTiles.cs" id="7_62k5v"]
 
 [resource]
-script = ExtResource("1_tvook")
-Tiles = Array[Object]([ExtResource("1_cj5ax"), ExtResource("2_5rfth"), ExtResource("4_3p641"), ExtResource("5_tp0sl"), ExtResource("6_e0bei")])
+script = ExtResource("7_62k5v")
+Tiles = Array[Object]([ExtResource("1_cj5ax"), ExtResource("2_5rfth"), ExtResource("4_3p641"), ExtResource("5_tp0sl"), ExtResource("6_e0bei"), ExtResource("6_mbqv6")])
