@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="GodotTile" load_steps=3 format=3 uid="uid://c5ww063o6pi4q"]
 
 [ext_resource type="PackedScene" uid="uid://66t2ttyivy3d" path="res://tiles/tile-6-turn.tscn" id="1_bnnus"]
-[ext_resource type="Script" path="res://WaveFunctionCollapse/GodotTile.cs" id="2_rcsj8"]
+[ext_resource type="Script" path="res://WaveFunctionCollapse.Godot/GodotTile.cs" id="2_rcsj8"]
 
 [resource]
 script = ExtResource("2_rcsj8")

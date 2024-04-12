@@ -2,7 +2,7 @@
 
 [ext_resource type="Resource" uid="uid://lks5ddtfawri" path="res://wcf_tiles/tile-1-blank.tres" id="1_xmucu"]
 [ext_resource type="Resource" uid="uid://b8oqfjlfokqc4" path="res://wcf_tiles/tile-3-end.tres" id="3_y136v"]
-[ext_resource type="Script" path="res://WaveFunctionCollapse/GodotTiles.cs" id="7_pg1fq"]
+[ext_resource type="Script" path="res://WaveFunctionCollapse.Godot/GodotTiles.cs" id="7_pg1fq"]
 
 [resource]
 script = ExtResource("7_pg1fq")

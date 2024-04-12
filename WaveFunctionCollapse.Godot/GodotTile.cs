@@ -1,22 +1,18 @@
 using Godot;
-using WaveFunctionCollapse;
+
+namespace WaveFunctionCollapse.Godot;
 
 [GlobalClass]
 public partial class GodotTile : Resource
 {
     [Export] public PackedScene Prefab;
-
     [Export] public string TopConnectors;
-
     [Export] public string RightConnectors;
-
     [Export] public string BottomConnectors;
-
     [Export] public string LeftConnectors;
-
     [Export] public bool GenerateRotations;
 
-    public int Rotation;
+    public int RotationY;
 
     [Export] public int Weight { get; set; } = 1;
 
@@ -29,7 +25,7 @@ public partial class GodotTile : Resource
             RightConnectors = RightConnectors,
             BottomConnectors = BottomConnectors,
             LeftConnectors = LeftConnectors,
-            Rotation = Rotation,
+            Rotation = RotationY,
             Weight = Weight,
         };
     }

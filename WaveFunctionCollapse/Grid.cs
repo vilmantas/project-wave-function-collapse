@@ -41,7 +41,7 @@ public class Grid
         InitializeEmptyGrid();
     }
 
-    public Cell[] LowestEntropyNodes()
+    public Cell[] LowestEntropyCells()
     {
         var cells = ProcessableCells();
 

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using WaveFunctionCollapse;
+using WaveFunctionCollapse.Godot;
 using Node= WaveFunctionCollapse.Cell;
 
 public partial class Main : Node3D
@@ -25,85 +26,26 @@ public partial class Main : Node3D
     {
 	    Tiles = Configuration.Tiles;
 
-	    var iterations = Tiles.Length;
-
 	    var newTiles = Tiles.ToList();
 
-	    for (int i = 0; i < iterations; i++)
-	    {
-		    var godotTile = Tiles[i];
-
-		    if (!godotTile.GenerateRotations) continue;
-
-		    newTiles.AddRange(AppendRotations(godotTile));
-	    }
+	    newTiles.AddRange(Utilities.GenerateRotations(Tiles));
 
 	    Tiles = newTiles.ToArray();
-    }
-
-    private List<GodotTile> AppendRotations(GodotTile tile)
-    {
-	    var result = new List<GodotTile>();
-
-	    var connections = new List<string>()
-	    {
-		    tile.TopConnectors, tile.RightConnectors,
-		    tile.BottomConnectors, tile.LeftConnectors
-	    };
-
-	    for (int i = 1; i < 4; i++)
-	    {
-		    var lastElement = connections[^1];
-		    connections.RemoveAt(connections.Count - 1);
-		    connections.Insert(0, lastElement);
-
-		    var x = new GodotTile();
-
-		    x.TopConnectors = connections[0];
-		    x.RightConnectors = connections[1];
-		    x.BottomConnectors = connections[2];
-		    x.LeftConnectors = connections[3];
-
-		    x.Rotation = i;
-		    x.Prefab = tile.Prefab;
-		    x.GenerateRotations = false;
-		    x.Weight = tile.Weight;
-
-		    result.Add(x);
-	    }
-
-	    return result;
     }
 
     public override void _Process(double delta)
     {
 	    if (Paused) return;
-
     }
 
     public override void _Input(InputEvent @event)
     {
-	    int randomSeed = 2;
-
 	    if (Input.IsActionJustPressed("generate"))
 	    {
-		    var random = new Random();
-
 		    Grid grid = new Grid(GridSizeX, GridSizeY,
 			    Tiles.Select(x => x.ToTile()).ToArray());
 
-		    while (!grid.IsCollapsed)
-		    {
-			    var x = grid.LowestEntropyNodes();
-
-			    var randomNode = x[random.Next(x.Length)];
-
-			    if (randomNode.Entropy == 0) break;
-
-			    randomNode.Collapse();
-
-			    SimpleNeighbourValidator.Process(randomNode);
-		    }
+		    while (!Algorithm.Run(grid)) ;
 
 		    RenderGrid(grid);
 	    }
@@ -115,19 +57,21 @@ public partial class Main : Node3D
 
 	    if (Input.IsActionJustPressed("clear"))
 	    {
-		    for(int i = 0; i < Container.GetChildCount(); i++)
-		    {
-			    Container.GetChild(i).QueueFree();
-		    }
+		    ClearContainer();
 	    }
     }
 
-	private void RenderGrid(Grid grid)
+    private void ClearContainer()
+    {
+	    for(int i = 0; i < Container.GetChildCount(); i++)
+	    {
+		    Container.GetChild(i).QueueFree();
+	    }
+    }
+
+    private void RenderGrid(Grid grid)
 	{
-		for(int i = 0; i < Container.GetChildCount(); i++)
-		{
-			Container.GetChild(i).QueueFree();
-		}
+		ClearContainer();
 
 		foreach (var node in grid.Cells)
 		{
@@ -160,7 +104,7 @@ public partial class Main : Node3D
 				Container.AddChild(tile);
 
 				tile.GlobalPosition = new Vector3(node.X, 0, -node.Y);
-				tile.RotationDegrees = new Vector3(0, -90 * node.Options[0].Rotation, 0);
+				tile.RotationDegrees = new Vector3(0, -node.Options[0].Rotation, 0);
 			}
 		}
 	}
