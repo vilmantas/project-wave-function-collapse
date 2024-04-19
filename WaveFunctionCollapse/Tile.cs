@@ -12,4 +12,17 @@ public class Tile
 
     public bool LimitEnabled;
     public int Limit;
+
+    public PositionMode Positioning = PositionMode.All;
+
+    public string[] Connectors => new[]
+        {TopConnectors, RightConnectors, BottomConnectors, LeftConnectors};
+}
+
+public enum PositionMode
+{
+    All,
+    Center,
+    Border,
+    Corner,
 }

@@ -26,10 +26,11 @@ albedo_color = Color(0.180392, 0.392157, 0.207843, 1)
 metallic_specular = 0.0
 
 [node name="main" type="Node3D" node_paths=PackedStringArray("Container")]
+transform = Transform3D(1.2126, 0, 0, 0, 1.2126, 0, 0, 0, 1.2126, 0, 0, 0)
 script = ExtResource("1_dait1")
 Configuration = ExtResource("2_c4t7e")
-GridSizeX = 15
-GridSizeY = 15
+GridSizeX = 10
+GridSizeY = 10
 Container = NodePath("container")
 
 [node name="environment" type="WorldEnvironment" parent="."]

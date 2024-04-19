@@ -22,6 +22,8 @@ public partial class Main : Node3D
 
     public bool Paused;
 
+    public Grid Grid;
+
     public override void _Ready()
     {
 	    Tiles = Configuration.Tiles;
@@ -35,19 +37,36 @@ public partial class Main : Node3D
 
     public override void _Process(double delta)
     {
+	    if (Grid == null) return;
+
 	    if (Paused) return;
+
+	    var result = Algorithm.Step(Grid);
+
+	    if (!result)
+	    {
+		    Grid = null;
+		    return;
+	    }
+
+	    RenderGrid(Grid);
     }
 
     public override void _Input(InputEvent @event)
     {
 	    if (Input.IsActionJustPressed("generate"))
 	    {
-		    Grid grid = new Grid(GridSizeX, GridSizeY,
+		    Grid = new Grid(GridSizeX, GridSizeY,
 			    Tiles.Select(x => x.ToTile()).ToArray());
 
-		    while (!Algorithm.Run(grid)) ;
+		    BorderStrategy.Process(Grid);
+	    }
 
-		    RenderGrid(grid);
+	    if (Input.IsActionJustPressed("next"))
+	    {
+		    Algorithm.Step(Grid);
+
+		    RenderGrid(Grid);
 	    }
 
 	    if (Input.IsActionJustPressed("pause"))
@@ -57,7 +76,14 @@ public partial class Main : Node3D
 
 	    if (Input.IsActionJustPressed("clear"))
 	    {
+		    Grid = null;
+
 		    ClearContainer();
+	    }
+
+	    if (Input.IsKeyPressed(Key.F))
+	    {
+		    TileDebug.Debug = !TileDebug.Debug;
 	    }
     }
 
@@ -77,14 +103,25 @@ public partial class Main : Node3D
 		{
 			if (!node.IsCollapsed)
 			{
-				var t = Tiles[0].Prefab.Instantiate<TileDebug>();
-				Container.AddChild(t);
+				if (node.IsBroken) continue;
 
-				t.ValidOptions = node.Entropy;
-				t.X = node.X;
-				t.Y = node.Y;
+				var tile = Tiles[0].Prefab.Instantiate<Node3D>();
 
-				t.GlobalPosition = new Vector3(node.X, 0, -node.Y);
+				if (tile is TileDebug debugTile)
+				{
+					debugTile.ValidOptions = node.Entropy;
+					debugTile.X = node.X;
+					debugTile.Y = node.Y;
+					debugTile.Up = node.Up != null;
+					debugTile.Right = node.Right != null;
+					debugTile.Down = node.Down != null;
+					debugTile.Left = node.Left != null;
+				}
+
+				Container.AddChild(tile);
+
+				tile.GlobalPosition = new Vector3(node.X, 0, -node.Y);
+				tile.RotationDegrees = new Vector3(0, -node.Options[0].Rotation, 0);
 			}
 			else
 			{
@@ -109,5 +146,5 @@ public partial class Main : Node3D
 		}
 	}
 
-	private GodotTile FindTile(string name) => Tiles.First(x => x.Prefab.ResourcePath == name);
+	private GodotTile FindTile(string name) => Tiles.First(x => x.ResourcePath == name);
 }

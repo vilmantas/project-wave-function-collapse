@@ -13,4 +13,5 @@ LeftConnectors = "ABA"
 GenerateRotations = false
 LimitEnabled = false
 Limit = 1
+Positioning = 1
 Weight = 1

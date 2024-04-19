@@ -12,11 +12,16 @@ public partial class TileDebug : Node3D
 	public bool Down;
 	public bool Left;
 
-	public bool Debug = false;
+	public static bool Debug = false;
+
+	public override void _Ready()
+	{
+		Label.Text = "";
+	}
 
 	public override void _Process(double delta)
 	{
-		if (!Debug)
+		if (!TileDebug.Debug)
 		{
 			Label.Text = "";
 			return;
@@ -24,13 +29,5 @@ public partial class TileDebug : Node3D
 
 		Label.Text = $"{ValidOptions} ({X},{Y})";
 		Label.GlobalBasis = GetViewport().GetCamera3D().GlobalBasis;
-	}
-
-	public override void _Input(InputEvent @event)
-	{
-		if (Input.IsKeyPressed(Key.F))
-		{
-			Debug = !Debug;
-		}
 	}
 }

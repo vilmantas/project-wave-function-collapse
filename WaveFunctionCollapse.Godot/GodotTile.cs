@@ -15,6 +15,8 @@ public partial class GodotTile : Resource
     [Export] public bool LimitEnabled;
     [Export] public int Limit = 1;
 
+    [Export] public PositionMode Positioning = PositionMode.All;
+
     public int RotationY;
 
     [Export] public int Weight { get; set; } = 1;
@@ -23,7 +25,7 @@ public partial class GodotTile : Resource
     {
         return new Tile
         {
-            Name = Prefab.ResourcePath,
+            Name = ResourcePath,
             TopConnectors = TopConnectors,
             RightConnectors = RightConnectors,
             BottomConnectors = BottomConnectors,
@@ -32,6 +34,7 @@ public partial class GodotTile : Resource
             Weight = Weight,
             Limit = Limit,
             LimitEnabled = LimitEnabled,
+            Positioning = Positioning,
         };
     }
 
@@ -39,6 +42,7 @@ public partial class GodotTile : Resource
     {
         return new GodotTile
         {
+            ResourcePath = ResourcePath,
             Prefab = Prefab,
             TopConnectors = TopConnectors,
             RightConnectors = RightConnectors,
@@ -49,6 +53,7 @@ public partial class GodotTile : Resource
             Weight = Weight,
             Limit = Limit,
             LimitEnabled = LimitEnabled,
+            Positioning = Positioning,
         };
     }
 }

@@ -19,6 +19,8 @@ namespace WaveFunctionCollapse
 		public int Entropy => Options.Count;
 		public bool IsCollapsed => Options.Count == 1;
 
+		public bool IsBroken => Options.Count == 0;
+
 		public void Collapse()
 		{
 			if (IsCollapsed) return;
