@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="GodotTile" load_steps=3 format=3 uid="uid://u34xhbeuvvga"]
+
+[ext_resource type="PackedScene" uid="uid://caw4ss154ebf4" path="res://tile_prefabs/kenney/tile-3-grass-blank.tscn" id="1_1vt81"]
+[ext_resource type="Script" path="res://WaveFunctionCollapse.Godot/GodotTile.cs" id="2_cnda3"]
+
+[resource]
+script = ExtResource("2_cnda3")
+Prefab = ExtResource("1_1vt81")
+TopConnectors = "AAA"
+RightConnectors = "AAA"
+BottomConnectors = "AAA"
+LeftConnectors = "AAA"
+GenerateRotations = false
+LimitEnabled = false
+Limit = 1
+Positioning = 0
+Weight = 1

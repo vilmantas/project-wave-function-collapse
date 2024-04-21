@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="GodotTile" load_steps=3 format=3 uid="uid://dhtim0ks32tcv"]
+
+[ext_resource type="PackedScene" uid="uid://cx7vv2khkle4k" path="res://tile_prefabs/kenney/tile-1-border.tscn" id="1_6hp2s"]
+[ext_resource type="Script" path="res://WaveFunctionCollapse.Godot/GodotTile.cs" id="1_brpw2"]
+
+[resource]
+script = ExtResource("1_brpw2")
+Prefab = ExtResource("1_6hp2s")
+TopConnectors = "AAA"
+RightConnectors = "ABB"
+BottomConnectors = "EMPTY"
+LeftConnectors = "BBA"
+GenerateRotations = true
+LimitEnabled = false
+Limit = 1
+Positioning = 0
+Weight = 1

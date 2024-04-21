@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="GodotTiles" load_steps=4 format=3 uid="uid://bfdqi41farsnn"]
+
+[ext_resource type="Resource" uid="uid://lks5ddtfawri" path="res://tile_resources/debug/tile-1-blank.tres" id="1_xmucu"]
+[ext_resource type="Resource" uid="uid://b8oqfjlfokqc4" path="res://tile_resources/debug/tile-3-end.tres" id="3_y136v"]
+[ext_resource type="Script" path="res://WaveFunctionCollapse.Godot/GodotTiles.cs" id="7_pg1fq"]
+
+[resource]
+script = ExtResource("7_pg1fq")
+Tiles = Array[Object]([ExtResource("1_xmucu"), ExtResource("3_y136v")])

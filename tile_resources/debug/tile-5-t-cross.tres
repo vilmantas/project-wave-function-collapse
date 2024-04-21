@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="GodotTile" load_steps=3 format=3 uid="uid://bajku7dqvlnr2"]
+
+[ext_resource type="PackedScene" uid="uid://bwttn56idq2om" path="res://tile_prefabs/debug/tile-5-t-cross.tscn" id="1_8mejv"]
+[ext_resource type="Script" path="res://WaveFunctionCollapse.Godot/GodotTile.cs" id="2_u24cv"]
+
+[resource]
+script = ExtResource("2_u24cv")
+Prefab = ExtResource("1_8mejv")
+TopConnectors = "ABA"
+RightConnectors = "ABA"
+BottomConnectors = "ABA"
+LeftConnectors = "AAA"
+GenerateRotations = true
+LimitEnabled = false
+Limit = 1
+Positioning = 1
+Weight = 1

@@ -22,28 +22,28 @@ public static class SimpleNeighbourConnectorStrategy
 
         if (cell.Up != null)
         {
-            validOptions = cell.Up.Options.Select(x => x.BottomConnectors).ToList();
+            validOptions = cell.Up.Options.Select(x => new string(x.BottomConnectors.ToCharArray().Reverse().ToArray())).ToList();
 
             cell.Options.RemoveAll(x => !validOptions.Contains(x.TopConnectors) || x.TopConnectors == "EMPTY");
         }
 
         if (cell.Down != null)
         {
-            validOptions = cell.Down.Options.Select(x => x.TopConnectors).ToList();
+            validOptions = cell.Down.Options.Select(x => new string(x.TopConnectors.ToCharArray().Reverse().ToArray())).ToList();
 
             cell.Options.RemoveAll(x => !validOptions.Contains(x.BottomConnectors) || x.BottomConnectors == "EMPTY");
         }
 
         if (cell.Left != null)
         {
-            validOptions = cell.Left.Options.Select(x => x.RightConnectors).ToList();
+            validOptions = cell.Left.Options.Select(x => new string(x.RightConnectors.ToCharArray().Reverse().ToArray())).ToList();
 
             cell.Options.RemoveAll(x => !validOptions.Contains(x.LeftConnectors) || x.LeftConnectors == "EMPTY");
         }
 
         if (cell.Right != null)
         {
-            validOptions = cell.Right.Options.Select(x => x.LeftConnectors).ToList();
+            validOptions = cell.Right.Options.Select(x => new string(x.LeftConnectors.ToCharArray().Reverse().ToArray())).ToList();
 
             cell.Options.RemoveAll(x => !validOptions.Contains(x.RightConnectors) || x.RightConnectors == "EMPTY");
         }

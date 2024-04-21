@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="GodotTiles" load_steps=5 format=3 uid="uid://opl6npcd2ibf"]
+
+[ext_resource type="Resource" uid="uid://dhtim0ks32tcv" path="res://tile_resources/kenney/tile-1-border.tres" id="1_inbmq"]
+[ext_resource type="Resource" uid="uid://cstxd63nsesys" path="res://tile_resources/kenney/tile-2-corner.tres" id="2_2o8s7"]
+[ext_resource type="Resource" uid="uid://u34xhbeuvvga" path="res://tile_resources/kenney/tile-3-grass-blank.tres" id="3_6bvwg"]
+[ext_resource type="Script" path="res://WaveFunctionCollapse.Godot/GodotTiles.cs" id="4_6r1ys"]
+
+[resource]
+script = ExtResource("4_6r1ys")
+Tiles = Array[Object]([ExtResource("3_6bvwg"), ExtResource("1_inbmq"), ExtResource("2_2o8s7")])

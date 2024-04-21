@@ -1,0 +1,34 @@
+[gd_scene load_steps=8 format=3 uid="uid://66t2ttyivy3d"]
+
+[ext_resource type="Texture2D" uid="uid://b656hkf88xicq" path="res://textures/turn.png" id="1_lo5ge"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_i07qh"]
+size = Vector3(2, 2, 2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_23am3"]
+albedo_color = Color(1, 1, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rdc0g"]
+albedo_texture = ExtResource("1_lo5ge")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_5qwj5"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_mqsyu"]
+load_path = "res://.godot/imported/top.png-a78dcf7df56bfa20a7103346b8ea29de.s3tc.ctex"
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_31esj"]
+albedo_texture = SubResource("CompressedTexture2D_mqsyu")
+
+[node name="tile" type="Node3D"]
+
+[node name="model" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+mesh = SubResource("BoxMesh_i07qh")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_23am3")
+
+[node name="tile" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.501, 0)
+material_override = SubResource("StandardMaterial3D_rdc0g")
+mesh = SubResource("PlaneMesh_5qwj5")
+surface_material_override/0 = SubResource("StandardMaterial3D_31esj")
