@@ -109,7 +109,10 @@ public partial class Main : Node3D
 
 		    Grid = new Grid(GridSizeX, GridSizeY, AllGridTiles.ToArray());
 
-		    BorderStrategy.Process(Grid);
+		    if (AllGridTiles.Any(x => x.Connectors.Count(x => x == "EMPTY") != 0))
+		    {
+			    BorderStrategy.Process(Grid);
+		    }
 	    }
 
 	    if (Input.IsActionJustPressed("next"))

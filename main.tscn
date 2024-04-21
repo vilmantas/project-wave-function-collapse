@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scripts/Main.cs" id="1_dait1"]
 [ext_resource type="PackedScene" uid="uid://311uoi36spp" path="res://prefabs/tile_debug.tscn" id="2_45hqa"]
-[ext_resource type="Resource" uid="uid://opl6npcd2ibf" path="res://tile_resources/kenney/kenney_all_tiles.tres" id="3_ag7bu"]
+[ext_resource type="Resource" uid="uid://dy3s5y3qwdie0" path="res://tile_resources/kenney/kenney_borderless.tres" id="3_2rmrr"]
 [ext_resource type="Script" path="res://scripts/CameraFreeLookController.cs" id="3_knhmc"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_8utej"]
@@ -33,7 +33,7 @@ script = ExtResource("1_dait1")
 CellDebugLabel = NodePath("CellDebugLabel")
 TileDebugPrefab = ExtResource("2_45hqa")
 SaveSeedButton = NodePath("SetSeed")
-Configuration = ExtResource("3_ag7bu")
+Configuration = ExtResource("3_2rmrr")
 GridSizeX = 10
 GridSizeY = 10
 Container = NodePath("container")

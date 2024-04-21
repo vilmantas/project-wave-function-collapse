@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="GodotTiles" load_steps=3 format=3 uid="uid://dy3s5y3qwdie0"]
+
+[ext_resource type="Resource" uid="uid://u34xhbeuvvga" path="res://tile_resources/kenney/tile-3-grass-blank.tres" id="1_crjkq"]
+[ext_resource type="Script" path="res://WaveFunctionCollapse.Godot/GodotTiles.cs" id="4_kixbg"]
+
+[resource]
+script = ExtResource("4_kixbg")
+Tiles = Array[Object]([ExtResource("1_crjkq")])
