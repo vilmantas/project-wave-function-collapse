@@ -3,13 +3,13 @@
 [ext_resource type="Texture2D" uid="uid://btm0crjmn3peu" path="res://textures/cross.png" id="2_jh14e"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_i07qh"]
+size = Vector3(2, 2, 2)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yu7em"]
 albedo_color = Color(0, 0, 1, 1)
 albedo_texture_force_srgb = true
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_8ymtl"]
-size = Vector2(1, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2quri"]
 albedo_texture = ExtResource("2_jh14e")
@@ -23,6 +23,6 @@ skeleton = NodePath("../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_yu7em")
 
 [node name="tile" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.01, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.501, 0)
 mesh = SubResource("PlaneMesh_8ymtl")
 surface_material_override/0 = SubResource("StandardMaterial3D_2quri")

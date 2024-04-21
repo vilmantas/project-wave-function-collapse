@@ -1,0 +1,48 @@
+[gd_scene load_steps=9 format=3 uid="uid://5dnskgtrdbdj"]
+
+[ext_resource type="Script" path="res://scripts/debug_scene.cs" id="1_opmpi"]
+[ext_resource type="Resource" uid="uid://nrfa1sf5re45" path="res://wcf_tiles/AllTiles.tres" id="2_t3bj8"]
+[ext_resource type="Script" path="res://scripts/CameraFreeLookController.cs" id="3_6t3db"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_d3wlk"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_8ijky"]
+sky_material = SubResource("ProceduralSkyMaterial_d3wlk")
+
+[sub_resource type="Environment" id="Environment_rl1ep"]
+background_mode = 2
+sky = SubResource("Sky_8ijky")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_y0rwx"]
+size = Vector2(50, 50)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_50tbx"]
+albedo_color = Color(0.180392, 0.392157, 0.207843, 1)
+metallic_specular = 0.0
+
+[node name="Debug" type="Node3D"]
+script = ExtResource("1_opmpi")
+Configuration = ExtResource("2_t3bj8")
+
+[node name="environment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_rl1ep")
+
+[node name="light" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+shadow_enabled = true
+
+[node name="Node3D" type="Node3D" parent="." node_paths=PackedStringArray("Camera")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.205842, 5.77421, 6.24903)
+script = ExtResource("3_6t3db")
+Camera = NodePath("camera")
+Speed = 12.0
+
+[node name="camera" type="Camera3D" parent="Node3D"]
+
+[node name="plane" type="MeshInstance3D" parent="."]
+mesh = SubResource("PlaneMesh_y0rwx")
+surface_material_override/0 = SubResource("StandardMaterial3D_50tbx")

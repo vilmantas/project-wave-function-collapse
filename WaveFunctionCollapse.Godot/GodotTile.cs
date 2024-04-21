@@ -30,7 +30,7 @@ public partial class GodotTile : Resource
             RightConnectors = RightConnectors,
             BottomConnectors = BottomConnectors,
             LeftConnectors = LeftConnectors,
-            Rotation = RotationY,
+            RotationY = RotationY,
             Weight = Weight,
             Limit = Limit,
             LimitEnabled = LimitEnabled,

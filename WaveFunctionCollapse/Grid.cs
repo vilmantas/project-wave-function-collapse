@@ -55,6 +55,10 @@ public class Grid
 
     public Cell[] CollapsedCells() => Cells.Cast<Cell>().Where(x => x.IsCollapsed).ToArray();
 
+    public Cell[] Corners() => new Cell[] { this[0, 0], this[0, Cells.GetLength(1) - 1], this[Cells.GetLength(0) - 1, 0], this[Cells.GetLength(0) - 1, Cells.GetLength(1) - 1] };
+
+    public Cell[] Borders() => Cells.Cast<Cell>().Where(x => x.Neighbours.Count(y => y == null) == 1).ToArray();
+
     private void InitializeEmptyGrid()
     {
         for (int i = 0; i < Cells.Length; i++)

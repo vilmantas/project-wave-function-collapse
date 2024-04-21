@@ -1,34 +1,32 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace WaveFunctionCollapse.Godot;
+namespace WaveFunctionCollapse;
 
 public static class Utilities
 {
-    public static GodotTile[] GenerateRotations(GodotTile[] originalTiles)
+    public static IEnumerable<Tile> GenerateRotations(IEnumerable<Tile> originalTiles)
     {
-        var rotatedTiles = new List<GodotTile>();
+        var rotatedTiles = new List<Tile>();
 
-        foreach (var tile in originalTiles.Where(x => x.GenerateRotations))
+        foreach (var tile in originalTiles)
         {
             rotatedTiles.AddRange(RotationsFor(tile));
         }
 
-        return rotatedTiles.ToArray();
+        return rotatedTiles;
     }
 
-    public static GodotTile[] RotationsFor(GodotTile tile)
+    public static IEnumerable<Tile> RotationsFor(Tile tile)
     {
-        var result = new List<GodotTile>();
+        var result = new List<Tile>();
 
-        var connections = new List<string>()
-        {
-            tile.TopConnectors, tile.RightConnectors, tile.BottomConnectors, tile.LeftConnectors
-        };
+        var connections = tile.Connectors.ToList();
 
         for (int i = 1; i < 4; i++)
         {
             var lastElement = connections[^1];
+
             connections.RemoveAt(connections.Count - 1);
             connections.Insert(0, lastElement);
 
@@ -43,6 +41,6 @@ public static class Utilities
             result.Add(rotatedTile);
         }
 
-        return result.ToArray();
+        return result;
     }
 }

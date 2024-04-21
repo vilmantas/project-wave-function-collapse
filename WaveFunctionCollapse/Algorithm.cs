@@ -1,26 +1,34 @@
+using System;
+using WaveFunctionCollapse.Collapsing;
+using WaveFunctionCollapse.Constraints;
+
 namespace WaveFunctionCollapse;
 
 public static class Algorithm
 {
+    public static Random Random { get; set; } = new Random();
+
+    public static CellCollapseStrategy CollapseStrategy { get; set; } = CellCollapseStrategy.Weight;
+
+    public enum CellCollapseStrategy
+    {
+        Random,
+        Weight,
+    }
+
     public static bool Run(Grid grid)
     {
-        var random = new System.Random();
-
-        BorderStrategy.Process(grid);
-
         while (!grid.IsCollapsed)
         {
             var candidates = grid.LowestEntropyCells();
 
-            var cell = candidates[random.Next(candidates.Length)];
+            var cell = candidates[Random.Next(candidates.Length)];
 
             if (cell.Entropy == 0) return false;
 
-            cell.Collapse();
+            Collapse(cell);
 
-            SimpleNeighbourValidator.Process(cell);
-
-            LimitStrategy.Process(grid);
+            SimpleNeighbourConnectorStrategy.Process(cell);
         }
 
         return true;
@@ -30,22 +38,33 @@ public static class Algorithm
     {
         if (grid.IsCollapsed) return false;
 
-        var random = new System.Random();
+        LimitStrategy.Process(grid);
 
         var candidates = grid.LowestEntropyCells();
 
-        var cell = candidates[random.Next(candidates.Length)];
+        var cell = candidates[Random.Next(candidates.Length)];
 
-        cell.Random = random;
+        cell.Random = Random;
 
         if (cell.Entropy == 0) return false;
 
-        cell.Collapse();
+        Collapse(cell);
 
-        SimpleNeighbourValidator.Process(cell);
-
-        LimitStrategy.Process(grid);
+        SimpleNeighbourConnectorStrategy.Process(cell);
 
         return true;
+    }
+
+    private static void Collapse(Cell cell)
+    {
+        switch (CollapseStrategy)
+        {
+            case CellCollapseStrategy.Weight:
+                WeightCollapseStrategy.Collapse(cell);
+                break;
+            case CellCollapseStrategy.Random:
+                RandomCollapseStrategy.Collapse(cell);
+                break;
+        }
     }
 }

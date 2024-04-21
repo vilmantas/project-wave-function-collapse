@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=3 uid="uid://311uoi36spp"]
+
+[ext_resource type="Script" path="res://scripts/TileDebug.cs" id="1_mm1ni"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_qjido"]
+size = Vector3(0.5, 0.5, 0.5)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_cgblf"]
+data = PackedVector3Array(-0.25, 0.25, 0.25, 0.25, 0.25, 0.25, -0.25, -0.25, 0.25, 0.25, 0.25, 0.25, 0.25, -0.25, 0.25, -0.25, -0.25, 0.25, 0.25, 0.25, -0.25, -0.25, 0.25, -0.25, 0.25, -0.25, -0.25, -0.25, 0.25, -0.25, -0.25, -0.25, -0.25, 0.25, -0.25, -0.25, 0.25, 0.25, 0.25, 0.25, 0.25, -0.25, 0.25, -0.25, 0.25, 0.25, 0.25, -0.25, 0.25, -0.25, -0.25, 0.25, -0.25, 0.25, -0.25, 0.25, -0.25, -0.25, 0.25, 0.25, -0.25, -0.25, -0.25, -0.25, 0.25, 0.25, -0.25, -0.25, 0.25, -0.25, -0.25, -0.25, 0.25, 0.25, 0.25, -0.25, 0.25, 0.25, 0.25, 0.25, -0.25, -0.25, 0.25, 0.25, -0.25, 0.25, -0.25, 0.25, 0.25, -0.25, -0.25, -0.25, 0.25, 0.25, -0.25, 0.25, -0.25, -0.25, -0.25, 0.25, -0.25, 0.25, 0.25, -0.25, -0.25, -0.25, -0.25, -0.25)
+
+[node name="TileDebug" type="Node3D" node_paths=PackedStringArray("Area", "CoordinatesLabel")]
+script = ExtResource("1_mm1ni")
+Area = NodePath("Area3D")
+CoordinatesLabel = NodePath("Label3D")
+
+[node name="Label3D" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.68358, 0)
+
+[node name="Area3D" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Area3D"]
+cast_shadow = 0
+mesh = SubResource("BoxMesh_qjido")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("ConcavePolygonShape3D_cgblf")

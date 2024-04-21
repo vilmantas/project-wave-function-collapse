@@ -31,6 +31,25 @@ public partial class CameraFreeLookController : Node3D
         CurrentSpeed = Speed;
     }
 
+    public override void _Process(double delta)
+    {
+        // var mousePos = GetViewport().GetMousePosition();
+        // var from = Camera.ProjectRayOrigin(mousePos);
+        // var to = from + Camera.ProjectRayNormal(mousePos) * 50f;
+        //
+        // var result = GetWorld3D().DirectSpaceState.IntersectRay(new PhysicsRayQueryParameters3D() { From = from, To = to, CollisionMask = 1 << 0 });
+        //
+        // if (result.Count > 0)
+        // {
+        //     GD.Print(result["collider"].Obj);
+        //
+        //     if (result["collider"].Obj is TileDebug debug)
+        //     {
+        //         GD.Print($"landed on debug: {debug.cell.X},{debug.cell.Y}");
+        //     }
+        // }
+    }
+
     private void OnRotationChanged(bool obj)
     {
         if (obj)

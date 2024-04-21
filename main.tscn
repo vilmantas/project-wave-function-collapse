@@ -1,20 +1,20 @@
-[gd_scene load_steps=10 format=3 uid="uid://duro0j5d5qyp4"]
+[gd_scene load_steps=11 format=3 uid="uid://duro0j5d5qyp4"]
 
-[ext_resource type="Script" path="res://Main.cs" id="1_dait1"]
-[ext_resource type="Resource" uid="uid://nrfa1sf5re45" path="res://wcf_tiles/AllTiles.tres" id="2_c4t7e"]
-[ext_resource type="Script" path="res://CameraFreeLookController.cs" id="3_knhmc"]
-[ext_resource type="PackedScene" uid="uid://8sis0rghniyo" path="res://tiles/tile-1-blank.tscn" id="9_4im6v"]
+[ext_resource type="Script" path="res://scripts/Main.cs" id="1_dait1"]
+[ext_resource type="PackedScene" uid="uid://311uoi36spp" path="res://prefabs/tile_debug.tscn" id="2_45hqa"]
+[ext_resource type="Resource" uid="uid://nrfa1sf5re45" path="res://wcf_tiles/AllTiles.tres" id="2_dw403"]
+[ext_resource type="Script" path="res://scripts/CameraFreeLookController.cs" id="3_knhmc"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_8utej"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
 ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
 
-[sub_resource type="Sky" id="Sky_8ijky"]
+[sub_resource type="Sky" id="Sky_iglvc"]
 sky_material = SubResource("ProceduralSkyMaterial_8utej")
 
 [sub_resource type="Environment" id="Environment_8gr0y"]
 background_mode = 2
-sky = SubResource("Sky_8ijky")
+sky = SubResource("Sky_iglvc")
 tonemap_mode = 2
 glow_enabled = true
 
@@ -25,13 +25,20 @@ size = Vector2(50, 50)
 albedo_color = Color(0.180392, 0.392157, 0.207843, 1)
 metallic_specular = 0.0
 
-[node name="main" type="Node3D" node_paths=PackedStringArray("Container")]
-transform = Transform3D(1.2126, 0, 0, 0, 1.2126, 0, 0, 0, 1.2126, 0, 0, 0)
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_e76md"]
+data = PackedVector3Array(25, 0, 25, -25, 0, 25, 25, 0, -25, -25, 0, 25, -25, 0, -25, 25, 0, -25)
+
+[node name="main" type="Node3D" node_paths=PackedStringArray("CellDebugLabel", "SaveSeedButton", "Container", "RandomSeedLabel", "SeedTextLabel")]
 script = ExtResource("1_dait1")
-Configuration = ExtResource("2_c4t7e")
-GridSizeX = 10
-GridSizeY = 10
+CellDebugLabel = NodePath("CellDebugLabel")
+TileDebugPrefab = ExtResource("2_45hqa")
+SaveSeedButton = NodePath("SetSeed")
+Configuration = ExtResource("2_dw403")
+GridSizeX = 5
+GridSizeY = 5
 Container = NodePath("container")
+RandomSeedLabel = NodePath("SeedText")
+SeedTextLabel = NodePath("LineEdit")
 
 [node name="environment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_8gr0y")
@@ -40,47 +47,74 @@ environment = SubResource("Environment_8gr0y")
 transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
 shadow_enabled = true
 
-[node name="Node3D" type="Node3D" parent="." node_paths=PackedStringArray("Camera")]
+[node name="camera" type="Node3D" parent="." node_paths=PackedStringArray("Camera")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4937, 3.42636)
 script = ExtResource("3_knhmc")
 Camera = NodePath("camera")
 Speed = 12.0
 
-[node name="camera" type="Camera3D" parent="Node3D"]
+[node name="camera" type="Camera3D" parent="camera"]
 
 [node name="plane" type="MeshInstance3D" parent="."]
 mesh = SubResource("PlaneMesh_pr3rq")
 surface_material_override/0 = SubResource("StandardMaterial3D_vaf80")
 
+[node name="StaticBody3D" type="StaticBody3D" parent="plane"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="plane/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_e76md")
+
 [node name="container" type="Node3D" parent="."]
 
-[node name="tile" parent="." instance=ExtResource("9_4im6v")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.21728, 0, -1.16667)
+[node name="Label" type="Label" parent="."]
+offset_left = 29.0
+offset_top = 29.0
+offset_right = 276.0
+offset_bottom = 81.0
+text = "Generate R
+Next N
+Clear C
+Pause P
+Debug F"
 
-[node name="tile2" parent="." node_paths=PackedStringArray("Label") instance=ExtResource("9_4im6v")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.21728, 0, -2.35328)
-Label = NodePath("../tile/Label3D")
+[node name="CellDebugLabel" type="Label" parent="."]
+offset_left = 307.0
+offset_top = 314.0
+offset_right = 554.0
+offset_bottom = 441.0
 
-[node name="tile3" parent="." node_paths=PackedStringArray("Label") instance=ExtResource("9_4im6v")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.21728, 0, -3.84323)
-Label = NodePath("../tile/Label3D")
+[node name="SeedTitle" type="Label" parent="."]
+offset_left = 401.0
+offset_top = 37.0
+offset_right = 448.0
+offset_bottom = 63.0
+text = "Seed"
 
-[node name="tile4" parent="." node_paths=PackedStringArray("Label") instance=ExtResource("9_4im6v")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.21728, 0, -5.12691)
-Label = NodePath("../tile/Label3D")
+[node name="SeedTitle2" type="Label" parent="."]
+offset_left = 382.0
+offset_top = 85.0
+offset_right = 448.0
+offset_bottom = 111.0
+text = "Set Seed"
 
-[node name="tile5" parent="." node_paths=PackedStringArray("Label") instance=ExtResource("9_4im6v")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.37049, 0, -4.17037)
-Label = NodePath("../tile/Label3D")
+[node name="SeedText" type="Label" parent="."]
+offset_left = 469.0
+offset_top = 37.0
+offset_right = 516.0
+offset_bottom = 63.0
+text = "-"
 
-[node name="tile6" parent="." node_paths=PackedStringArray("Label") instance=ExtResource("9_4im6v")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.06905, 0, -4.17037)
-Label = NodePath("../tile/Label3D")
+[node name="SetSeed" type="Button" parent="."]
+offset_left = 740.0
+offset_top = 36.0
+offset_right = 914.0
+offset_bottom = 67.0
+text = "Copy Seed"
 
-[node name="tile7" parent="." node_paths=PackedStringArray("Label") instance=ExtResource("9_4im6v")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.17395, 0, -2.88351)
-Label = NodePath("../tile/Label3D")
-
-[node name="tile8" parent="." node_paths=PackedStringArray("Label") instance=ExtResource("9_4im6v")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.22237, 0, -2.81402)
-Label = NodePath("../tile/Label3D")
+[node name="LineEdit" type="LineEdit" parent="."]
+offset_left = 463.0
+offset_top = 83.0
+offset_right = 652.0
+offset_bottom = 114.0
+focus_next = NodePath("../SetSeed")
+focus_mode = 1

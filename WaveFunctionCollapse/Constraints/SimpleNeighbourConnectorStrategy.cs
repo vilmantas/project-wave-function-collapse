@@ -4,7 +4,7 @@ using Godot;
 
 namespace WaveFunctionCollapse;
 
-public static class SimpleNeighbourValidator
+public static class SimpleNeighbourConnectorStrategy
 {
     public static void Process(Cell cell)
     {
@@ -18,34 +18,34 @@ public static class SimpleNeighbourValidator
     {
         if (cell == null) return;
 
-        var validOptions = new List<string>();
+        List<string> validOptions;
 
         if (cell.Up != null)
         {
             validOptions = cell.Up.Options.Select(x => x.BottomConnectors).ToList();
 
-            cell.Options.RemoveAll(x => !validOptions.Contains(x.TopConnectors));
+            cell.Options.RemoveAll(x => !validOptions.Contains(x.TopConnectors) || x.TopConnectors == "EMPTY");
         }
 
         if (cell.Down != null)
         {
             validOptions = cell.Down.Options.Select(x => x.TopConnectors).ToList();
 
-            cell.Options.RemoveAll(x => !validOptions.Contains(x.BottomConnectors));
+            cell.Options.RemoveAll(x => !validOptions.Contains(x.BottomConnectors) || x.BottomConnectors == "EMPTY");
         }
 
         if (cell.Left != null)
         {
             validOptions = cell.Left.Options.Select(x => x.RightConnectors).ToList();
 
-            cell.Options.RemoveAll(x => !validOptions.Contains(x.LeftConnectors));
+            cell.Options.RemoveAll(x => !validOptions.Contains(x.LeftConnectors) || x.LeftConnectors == "EMPTY");
         }
 
         if (cell.Right != null)
         {
             validOptions = cell.Right.Options.Select(x => x.LeftConnectors).ToList();
 
-            cell.Options.RemoveAll(x => !validOptions.Contains(x.RightConnectors));
+            cell.Options.RemoveAll(x => !validOptions.Contains(x.RightConnectors) || x.RightConnectors == "EMPTY");
         }
     }
 }
