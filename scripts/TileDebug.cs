@@ -23,7 +23,7 @@ public partial class TileDebug : Node3D
 		Visible = Debug;
 		Cell = cell;
 
-		CoordinatesLabel.Text = $"{cell.X}, {cell.Y}";
+		CoordinatesLabel.Text = $"X:{cell.X}, Y:{cell.Y}, ID: {Main.AllGridTiles.IndexOf(cell.Options[0])}";
 	}
 
 	public override void _Process(double delta)

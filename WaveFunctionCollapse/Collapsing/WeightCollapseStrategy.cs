@@ -24,8 +24,6 @@ public static class WeightCollapseStrategy
 
             if (roll > sum) continue;
 
-            GD.Print($"Cell {cell.X},{cell.Y} collapsed to {option.Name} with weight {option.Weight} and a roll of {roll} from {tickets} tickets and {cell.Options.Count} total options.");
-
             cell.Options = new List<Tile> { option };
             break;
         }

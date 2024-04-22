@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scripts/Main.cs" id="1_dait1"]
 [ext_resource type="PackedScene" uid="uid://311uoi36spp" path="res://prefabs/tile_debug.tscn" id="2_45hqa"]
-[ext_resource type="Resource" uid="uid://dy3s5y3qwdie0" path="res://tile_resources/kenney/kenney_borderless.tres" id="3_2rmrr"]
+[ext_resource type="Resource" uid="uid://nrfa1sf5re45" path="res://tile_resources/debug/AllTiles.tres" id="3_2l5ya"]
 [ext_resource type="Script" path="res://scripts/CameraFreeLookController.cs" id="3_knhmc"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_8utej"]
@@ -28,17 +28,20 @@ metallic_specular = 0.0
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_e76md"]
 data = PackedVector3Array(25, 0, 25, -25, 0, 25, 25, 0, -25, -25, 0, 25, -25, 0, -25, 25, 0, -25)
 
-[node name="main" type="Node3D" node_paths=PackedStringArray("CellDebugLabel", "SaveSeedButton", "Container", "RandomSeedLabel", "SeedTextLabel")]
+[node name="main" type="Node3D" node_paths=PackedStringArray("ReuseGridButton", "ReuseGridText", "CellDebugLabel", "SaveSeedButton", "Container", "RandomSeedLabel", "SeedTextLabel", "PrintGridButton")]
 script = ExtResource("1_dait1")
+ReuseGridButton = NodePath("ReuseGrid")
+ReuseGridText = NodePath("ReuseGridText")
 CellDebugLabel = NodePath("CellDebugLabel")
 TileDebugPrefab = ExtResource("2_45hqa")
 SaveSeedButton = NodePath("SetSeed")
-Configuration = ExtResource("3_2rmrr")
+Configuration = ExtResource("3_2l5ya")
 GridSizeX = 10
-GridSizeY = 10
+GridSizeY = 5
 Container = NodePath("container")
-RandomSeedLabel = NodePath("SeedText")
-SeedTextLabel = NodePath("LineEdit")
+RandomSeedLabel = NodePath("SeedLabel")
+SeedTextLabel = NodePath("SeedInput")
+PrintGridButton = NodePath("PrintGrid")
 
 [node name="environment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_8gr0y")
@@ -74,9 +77,10 @@ offset_right = 276.0
 offset_bottom = 81.0
 text = "Generate R
 Next N
-Clear C
+Clear L
 Pause P
 Debug F"
+metadata/_edit_lock_ = true
 
 [node name="CellDebugLabel" type="Label" parent="."]
 offset_left = 307.0
@@ -98,12 +102,28 @@ offset_right = 448.0
 offset_bottom = 111.0
 text = "Set Seed"
 
-[node name="SeedText" type="Label" parent="."]
+[node name="SeedLabel" type="Label" parent="."]
 offset_left = 469.0
 offset_top = 37.0
 offset_right = 516.0
 offset_bottom = 63.0
 text = "-"
+
+[node name="ReuseGridText" type="TextEdit" parent="."]
+offset_left = 20.0
+offset_top = 226.0
+offset_right = 367.0
+offset_bottom = 538.0
+text = " 26   8   6   6   6   8   8   6   6   7 
+ 23  18  17  14  16   0   0  17  14  21 
+ 23  11  15   0   0   0   0   0   0  27 
+ 29   0  10   4  12  11  12  15   4  21 
+ 29   0  17  14  16   0  17  16  17  21 
+ 23   9  12   9  15   0   4   9  15  27 
+ 23  15   3  11  14  15   2   0   3  21 
+ 29   2   3  15   0  17  13   0  17  21 
+ 29  10   3  16   0   0  17  11  11  21 
+ 25  22  22  28  28  28  28  28  28  24"
 
 [node name="SetSeed" type="Button" parent="."]
 offset_left = 740.0
@@ -112,7 +132,21 @@ offset_right = 914.0
 offset_bottom = 67.0
 text = "Copy Seed"
 
-[node name="LineEdit" type="LineEdit" parent="."]
+[node name="PrintGrid" type="Button" parent="."]
+offset_left = 742.0
+offset_top = 85.0
+offset_right = 916.0
+offset_bottom = 116.0
+text = "Print Grid"
+
+[node name="ReuseGrid" type="Button" parent="."]
+offset_left = 742.0
+offset_top = 135.0
+offset_right = 916.0
+offset_bottom = 166.0
+text = "Reuse Grid"
+
+[node name="SeedInput" type="LineEdit" parent="."]
 offset_left = 463.0
 offset_top = 83.0
 offset_right = 652.0

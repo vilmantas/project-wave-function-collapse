@@ -2,12 +2,17 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using WaveFunctionCollapse;
 using WaveFunctionCollapse.Godot;
 using Node= WaveFunctionCollapse.Cell;
 
 public partial class Main : Node3D
 {
+	[Export] public Button ReuseGridButton;
+
+	[Export] public TextEdit ReuseGridText;
+
 	[Export] public Label CellDebugLabel;
 
 	public static Label CellDebugLabelStatic;
@@ -32,7 +37,7 @@ public partial class Main : Node3D
 
     public Grid Grid;
 
-    public List<Tile> AllGridTiles;
+    public static List<Tile> AllGridTiles;
 
     public Vector3 Bounds;
 
@@ -45,6 +50,8 @@ public partial class Main : Node3D
     [Export] private LineEdit SeedTextLabel;
 
     public static PackedScene DebugPrefab;
+
+    [Export] public Button PrintGridButton;
 
     public override void _Ready()
     {
@@ -71,6 +78,66 @@ public partial class Main : Node3D
 	    var mesh = tile.GetNode<MeshInstance3D>("model");
 
 	    Bounds = mesh.GetAabb().Size;
+
+	    PrintGridButton.Pressed += PrintGrid;
+
+	    ReuseGridButton.Pressed += ReuseGrid;
+    }
+
+    private void ReuseGrid()
+    {
+	    var lines = ReuseGridText.Text.Split('\n').Where(x => !string.IsNullOrEmpty(x));
+
+	    var cleanLines = lines.Select(x => x.Split(" ").Where(x => x != "").ToArray()).Reverse().ToArray();
+
+	    var preset = new int[cleanLines.Length, cleanLines[0].Length];
+
+	    for (int x = 0; x < cleanLines[0].Length; x++)
+	    {
+		    for (int y = 0; y < cleanLines.Length; y++)
+		    {
+			    preset[y, x] = int.Parse(cleanLines[y][x]);
+		    }
+	    }
+
+	    Grid = new Grid(preset.GetLength(1),
+		    preset.GetLength(0),
+		    AllGridTiles.ToArray(),
+		    preset);
+
+	    foreach (var cell in Grid.Cells)
+	    {
+		    if (!cell.IsCollapsed) continue;
+
+		    SimpleNeighbourConnectorStrategy.Process(cell);
+	    }
+
+	    RenderGrid(Grid);
+    }
+
+    public void PrintGrid()
+    {
+	    if (Grid == null) return;
+
+	    var xLen = Grid.GridSizeX;
+
+	    var yLen = Grid.GridSizeY;
+
+	    var sb = new StringBuilder();
+
+	    for (int y = yLen - 1; y >= 0; y--)
+	    {
+		    for (int x = 0; x < xLen; x++)
+		    {
+			    var cell = Grid[x, y];
+
+			    sb.Append($"{AllGridTiles.IndexOf(cell.Options[0]), 3} ");
+		    }
+
+		    sb.Append('\n');
+	    }
+
+	    ReuseGridText.Text = sb.ToString();
     }
 
     public override void _Process(double delta)
@@ -83,7 +150,6 @@ public partial class Main : Node3D
 
 	    if (!result)
 	    {
-		    Grid = null;
 		    return;
 	    }
 
