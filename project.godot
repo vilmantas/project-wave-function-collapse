@@ -19,6 +19,10 @@ config/icon="res://icon.svg"
 
 project/assembly_name="project-wave-function-collapse"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/wave_function_collapse/plugin.cfg")
+
 [input]
 
 rotate={

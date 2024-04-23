@@ -1,0 +1,120 @@
+[gd_scene load_steps=5 format=3 uid="uid://dprinkigkmjrr"]
+
+[ext_resource type="Script" path="res://addons/wave_function_collapse/features/generator/GeneratorItem.cs" id="1_i6r7w"]
+[ext_resource type="PackedScene" uid="uid://by6gmy7ajf810" path="res://addons/wave_function_collapse/features/tile_snapshot/tile_snapshot.tscn" id="2_jv2wu"]
+[ext_resource type="Texture2D" uid="uid://bhclkpo61rohg" path="res://addons/wave_function_collapse/test/ground_grass.glb-snapshot.png" id="3_lgdkg"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_plsta"]
+bg_color = Color(0.490196, 0.666667, 0.176471, 1)
+
+[node name="UiGeneratorImportItem" type="Control" node_paths=PackedStringArray("lbl_FileName", "img_preview", "txt_TopConnectors", "txt_RightConnectors", "txt_BottomConnectors", "txt_LeftConnectors", "btn_GenerateRotations", "btn_IsSymmetric", "btn_OverrideExisting", "txt_ResourceName", "btn_Generate")]
+custom_minimum_size = Vector2(256, 700)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_i6r7w")
+Snapshotter = ExtResource("2_jv2wu")
+lbl_FileName = NodePath("margin/list/lbl_file_name")
+img_preview = NodePath("margin/list/img_preview")
+txt_TopConnectors = NodePath("margin/list/txt_top_connectors")
+txt_RightConnectors = NodePath("margin/list/txt_right_connectors")
+txt_BottomConnectors = NodePath("margin/list/txt_bottom_connectors")
+txt_LeftConnectors = NodePath("margin/list/txt_left_connectors")
+btn_GenerateRotations = NodePath("margin/list/btn_generate_rotations")
+btn_IsSymmetric = NodePath("margin/list/btn_is_symmetric")
+btn_OverrideExisting = NodePath("margin/list/btn_override_existing")
+txt_ResourceName = NodePath("margin/list/cnt_save_name/txt_resource_name")
+btn_Generate = NodePath("margin/list/btn_generate")
+
+[node name="background" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_plsta")
+
+[node name="margin" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 20
+
+[node name="list" type="VBoxContainer" parent="margin"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="lbl_file_name" type="Label" parent="margin/list"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 26
+text = "File Name"
+autowrap_mode = 3
+
+[node name="img_preview" type="TextureRect" parent="margin/list"]
+layout_mode = 2
+size_flags_vertical = 3
+texture = ExtResource("3_lgdkg")
+expand_mode = 1
+
+[node name="separator" type="Control" parent="margin/list"]
+layout_mode = 2
+
+[node name="txt_top_connectors" type="LineEdit" parent="margin/list"]
+layout_mode = 2
+placeholder_text = "Top Connectors"
+
+[node name="txt_right_connectors" type="LineEdit" parent="margin/list"]
+layout_mode = 2
+placeholder_text = "Right Connectors"
+
+[node name="txt_bottom_connectors" type="LineEdit" parent="margin/list"]
+layout_mode = 2
+placeholder_text = "Bottom Connectors"
+
+[node name="txt_left_connectors" type="LineEdit" parent="margin/list"]
+layout_mode = 2
+placeholder_text = "Left Connectors"
+
+[node name="btn_generate_rotations" type="CheckButton" parent="margin/list"]
+layout_mode = 2
+text = "Generate Rotations"
+
+[node name="btn_is_symmetric" type="CheckButton" parent="margin/list"]
+layout_mode = 2
+text = "Tile Symmetric"
+
+[node name="btn_override_existing" type="CheckButton" parent="margin/list"]
+layout_mode = 2
+text = "Override Existing"
+
+[node name="cnt_save_name" type="HBoxContainer" parent="margin/list"]
+layout_mode = 2
+
+[node name="lbl_save_name" type="Label" parent="margin/list/cnt_save_name"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_vertical = 1
+text = "File Name"
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="txt_resource_name" type="LineEdit" parent="margin/list/cnt_save_name"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Generated Resource File Name"
+
+[node name="btn_generate" type="Button" parent="margin/list"]
+layout_mode = 2
+text = "Generate Resource Files"

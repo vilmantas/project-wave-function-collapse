@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=3 uid="uid://5dnskgtrdbdj"]
 
 [ext_resource type="Script" path="res://scripts/debug_scene.cs" id="1_opmpi"]
-[ext_resource type="Resource" uid="uid://nrfa1sf5re45" path="res://tile_resources/debug/AllTiles.tres" id="2_t3bj8"]
+[ext_resource type="Resource" uid="uid://nrfa1sf5re45" path="res://tile_resources/AllTiles.tres" id="2_t3bj8"]
 [ext_resource type="Script" path="res://scripts/CameraFreeLookController.cs" id="3_6t3db"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_d3wlk"]

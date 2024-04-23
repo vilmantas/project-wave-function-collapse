@@ -2,7 +2,7 @@ using Godot;
 
 namespace WaveFunctionCollapse.Godot;
 
-[GlobalClass]
+[GlobalClass, Tool]
 public partial class GodotTile : Resource
 {
     [Export] public PackedScene Prefab;

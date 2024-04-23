@@ -1,0 +1,108 @@
+[gd_scene load_steps=3 format=3 uid="uid://d3y06yjmvxdcp"]
+
+[ext_resource type="Script" path="res://addons/wave_function_collapse/Tile.cs" id="1_6nsgd"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_la0d5"]
+
+[node name="UI" type="Control" node_paths=PackedStringArray("txt_TopConnectors", "txt_RightConnectors", "txt_BottomConnectors", "txt_LeftConnectors", "lbl_Title")]
+custom_minimum_size = Vector2(250, 400)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 250.0
+offset_bottom = 400.0
+script = ExtResource("1_6nsgd")
+txt_TopConnectors = NodePath("txt_top")
+txt_RightConnectors = NodePath("txt_right")
+txt_BottomConnectors = NodePath("txt_bottom")
+txt_LeftConnectors = NodePath("txt_left")
+lbl_Title = NodePath("lbl_title")
+
+[node name="background" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_la0d5")
+
+[node name="lbl_title" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 6.0
+offset_bottom = 29.0
+grow_horizontal = 2
+text = "File Name"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="txt_top" type="LineEdit" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 40.0
+offset_top = 77.0
+offset_right = -42.9375
+offset_bottom = 108.0
+grow_horizontal = 2
+text = "ABC"
+alignment = 1
+
+[node name="txt_right" type="LineEdit" parent="."]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -67.0625
+offset_top = -15.5
+offset_bottom = 15.5
+grow_horizontal = 0
+grow_vertical = 2
+text = "ABC"
+alignment = 1
+
+[node name="txt_bottom" type="LineEdit" parent="."]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 40.0
+offset_top = 37.0
+offset_right = -42.9375
+offset_bottom = 68.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "ABC"
+alignment = 1
+
+[node name="txt_left" type="LineEdit" parent="."]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -15.5
+offset_right = 67.0625
+offset_bottom = 15.5
+grow_vertical = 2
+text = "ABC"
+alignment = 1
+
+[node name="btn_save" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -54.0
+offset_top = -45.0
+offset_right = 54.0
+offset_bottom = -14.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Save"
