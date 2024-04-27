@@ -26,6 +26,7 @@ public partial class GodotTile : Resource
     {
         return new Tile
         {
+            Id = Id,
             Name = ResourcePath,
             TopConnectors = TopConnectors,
             RightConnectors = RightConnectors,
@@ -43,6 +44,7 @@ public partial class GodotTile : Resource
     {
         return new GodotTile
         {
+            Id = Id,
             ResourcePath = ResourcePath,
             Prefab = Prefab,
             TopConnectors = TopConnectors,

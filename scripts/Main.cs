@@ -63,19 +63,24 @@ public partial class Main : Node3D
 
 	    Tiles = Configuration.Tiles;
 
-	    var gridTiles = Tiles.Select(x => x.ToTile()).ToList();
-
-	    var rotatable = Tiles.Where(x => x.GenerateRotations).Select(x => x.ToTile());
-
-	    var rotations = Utilities.GenerateRotations(rotatable.ToArray());
-
-	    gridTiles.AddRange(rotations);
-
-	    AllGridTiles = gridTiles;
+	    AllGridTiles = Tiles.Select(x => x.ToTile()).ToList();
 
 	    var tile = Tiles.First().Prefab.Instantiate<Node3D>();
 
-	    var mesh = tile.GetNode<MeshInstance3D>("model");
+	    MeshInstance3D mesh = tile as MeshInstance3D;
+
+	    foreach (var node in tile.GetChildren().Cast<Node3D>())
+	    {
+		    if (mesh != null) break;
+
+		    mesh = GetMesh(node);
+	    }
+
+	    if (mesh == null)
+	    {
+		    GD.Print("Unable to find bounds for mesh.");
+		    return;
+	    }
 
 	    Bounds = mesh.GetAabb().Size;
 
@@ -84,11 +89,25 @@ public partial class Main : Node3D
 	    ReuseGridButton.Pressed += ReuseGrid;
     }
 
+    private MeshInstance3D GetMesh(Node3D parent)
+    {
+	    MeshInstance3D mesh = parent as MeshInstance3D;
+
+	    foreach (var node in parent.GetChildren().Cast<Node3D>())
+	    {
+		    if (mesh != null) break;
+
+		    mesh = GetMesh(node);
+	    }
+
+	    return mesh;
+    }
+
     private void ReuseGrid()
     {
 	    var lines = ReuseGridText.Text.Split('\n').Where(x => !string.IsNullOrEmpty(x));
 
-	    var cleanLines = lines.Select(x => x.Split(" ").Where(x => x != "").ToArray()).Reverse().ToArray();
+	    var cleanLines = lines.Select(line => line.Split(" ").Where(item => item != "").Select(int.Parse).ToArray()).Reverse().ToArray();
 
 	    var preset = new int[cleanLines.Length, cleanLines[0].Length];
 
@@ -96,7 +115,7 @@ public partial class Main : Node3D
 	    {
 		    for (int y = 0; y < cleanLines.Length; y++)
 		    {
-			    preset[y, x] = int.Parse(cleanLines[y][x]);
+			    preset[y, x] = cleanLines[y][x];
 		    }
 	    }
 
