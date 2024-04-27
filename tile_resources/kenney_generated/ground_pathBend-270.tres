@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="GodotTile" load_steps=3 format=3]
+
+[ext_resource type="PackedScene" path="res://imports/tiles/ground_pathBend.glb" id="1_lnvwr"]
+[ext_resource type="Script" path="res://WaveFunctionCollapse.Godot/GodotTile.cs" id="2_632ev"]
+
+[resource]
+script = ExtResource("2_632ev")
+Id = 471710
+Prefab = ExtResource("1_lnvwr")
+TopConnectors = "ABA"
+RightConnectors = "ABA"
+BottomConnectors = "AAA"
+LeftConnectors = "AAA"
+GenerateRotations = false
+LimitEnabled = false
+Limit = 1
+Positioning = 0
+RotationY = 270
+Weight = 1

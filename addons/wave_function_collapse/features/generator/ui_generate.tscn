@@ -1,59 +1,25 @@
-[gd_scene load_steps=3 format=3 uid="uid://d1o4x6d01ied"]
+[gd_scene load_steps=4 format=3 uid="uid://d1o4x6d01ied"]
 
 [ext_resource type="Script" path="res://addons/wave_function_collapse/features/generator/Generator.cs" id="1_frbhp"]
 [ext_resource type="PackedScene" uid="uid://dprinkigkmjrr" path="res://addons/wave_function_collapse/features/generator/ui_generator_import_item.tscn" id="2_dnp8d"]
+[ext_resource type="PackedScene" uid="uid://ccoir205txayt" path="res://addons/wave_function_collapse/features/generator/snapshotter.tscn" id="2_h3bqt"]
 
-[node name="UiGenerate" type="Control" node_paths=PackedStringArray("ctn_Imports", "txt_ImportsLocation", "txt_ExportDestination", "btn_LoadImports")]
-layout_mode = 3
+[node name="UiGenerate" type="VBoxContainer" node_paths=PackedStringArray("ctn_Imports", "txt_ImportsLocation", "txt_ExportDestination", "btn_LoadImports")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_frbhp")
+Snapshotter = ExtResource("2_h3bqt")
 ui_GeneratorItemPrefab = ExtResource("2_dnp8d")
 ctn_Imports = NodePath("margin/scroll/ctn_imports")
 txt_ImportsLocation = NodePath("ctn_settings/txt_imports")
 txt_ExportDestination = NodePath("ctn_settings/txt_exports")
 btn_LoadImports = NodePath("ctn_settings/btn_import")
 
-[node name="background" type="Panel" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="margin" type="MarginContainer" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = 54.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
-
-[node name="scroll" type="ScrollContainer" parent="margin"]
-layout_mode = 2
-
-[node name="ctn_imports" type="FlowContainer" parent="margin/scroll"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-theme_override_constants/h_separation = 20
-theme_override_constants/v_separation = 20
-
 [node name="ctn_settings" type="HBoxContainer" parent="."]
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_bottom = 54.0
-grow_horizontal = 2
+layout_mode = 2
 theme_override_constants/separation = 10
 
 [node name="splitter_1" type="Control" parent="ctn_settings"]
@@ -63,7 +29,7 @@ layout_mode = 2
 [node name="lbl_imports" type="Label" parent="ctn_settings"]
 layout_mode = 2
 size_flags_horizontal = 0
-text = "Tile Scenes Location"
+text = "Tile Scenes Directory"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -95,9 +61,27 @@ vertical_alignment = 1
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
-text = "res://addons/wave_function_collapse/test/"
+text = "res://tile_resources/kenney_generated/"
 placeholder_text = "Folder where the generated resource files will be placed"
 
 [node name="splitter_3" type="Control" parent="ctn_settings"]
 custom_minimum_size = Vector2(40, 0)
 layout_mode = 2
+
+[node name="margin" type="MarginContainer" parent="."]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="scroll" type="ScrollContainer" parent="margin"]
+layout_mode = 2
+
+[node name="ctn_imports" type="FlowContainer" parent="margin/scroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/h_separation = 20
+theme_override_constants/v_separation = 20

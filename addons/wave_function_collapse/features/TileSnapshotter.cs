@@ -8,29 +8,29 @@ public partial class TileSnapshotter : Node
 
     private bool Initialized = false;
 
-    private string savepath;
+    public string SavePath;
 
     private float delay = 0f;
+
+    public Action OnSaved;
 
     public override void _Process(double delta)
     {
         delay += (float)delta;
 
-        if (delay < 0.5f) return;
+        if (delay < 1f) return;
 
         if (Initialized) return;
 
         Initialized = true;
 
-        TextureViewport.GetViewport().GetTexture().GetImage().SavePng(savepath);
+        TextureViewport.GetViewport().GetTexture().GetImage().SavePng(SavePath);
 
-        GetParent().QueueFree();
-
-        QueueFree();
+        OnSaved?.Invoke();
     }
 
     public void Initialize(string snapshotSavePath)
     {
-        savepath = snapshotSavePath;
+        SavePath = snapshotSavePath;
     }
 }

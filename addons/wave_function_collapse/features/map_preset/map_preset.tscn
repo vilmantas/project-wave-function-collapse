@@ -1,0 +1,128 @@
+[gd_scene load_steps=4 format=3 uid="uid://dh51y82l2fhcb"]
+
+[ext_resource type="Script" path="res://addons/wave_function_collapse/features/map_preset/Map.cs" id="1_f7ytp"]
+[ext_resource type="PackedScene" uid="uid://4x78mhxrpyi0" path="res://addons/wave_function_collapse/features/map_preset/tile_preview.tscn" id="2_qcbdr"]
+[ext_resource type="PackedScene" uid="uid://bbxym3a8fprkt" path="res://addons/wave_function_collapse/features/map_preset/map_grid.tscn" id="3_gnya5"]
+
+[node name="MapPreset" type="VBoxContainer" node_paths=PackedStringArray("fd_LoadPreset", "txt_ImportLocation", "btn_Import", "ctn_AvailableTiles", "ctn_grid", "txt_Rows", "txt_Columns", "btn_GenerateGrid", "btn_PrintGrid", "btn_LoadPreset")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 15
+script = ExtResource("1_f7ytp")
+fd_LoadPreset = NodePath("ctn_main/ctn_grid/fd_load_preset")
+txt_ImportLocation = NodePath("ctn_import/txt_imports")
+btn_Import = NodePath("ctn_import/btn_import")
+ctn_AvailableTiles = NodePath("ctn_main/margin_tiles/ctn_available_tiles")
+TileScene = ExtResource("2_qcbdr")
+ctn_grid = NodePath("ctn_main/ctn_grid/ctn_grid")
+txt_Rows = NodePath("ctn_main/ctn_grid/ctn_settings/txt_rows")
+txt_Columns = NodePath("ctn_main/ctn_grid/ctn_settings/txt_collumns")
+btn_GenerateGrid = NodePath("ctn_main/ctn_grid/ctn_settings/btn_generate_grid")
+btn_PrintGrid = NodePath("ctn_main/ctn_grid/ctn_settings/btn_print")
+btn_LoadPreset = NodePath("ctn_main/ctn_grid/ctn_settings/btn_preset")
+
+[node name="ctn_import" type="HBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+theme_override_constants/separation = 20
+
+[node name="splitter_1" type="Control" parent="ctn_import"]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+
+[node name="lbl_imports" type="Label" parent="ctn_import"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Tile Resources Directory"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="txt_imports" type="LineEdit" parent="ctn_import"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+text = "res://tile_resources/kenney_generated"
+placeholder_text = "Folder with .tres files"
+
+[node name="btn_import" type="Button" parent="ctn_import"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "Load Resources"
+
+[node name="splitter_2" type="Control" parent="ctn_import"]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+
+[node name="splitter" type="Control" parent="."]
+layout_mode = 2
+
+[node name="ctn_main" type="HBoxContainer" parent="."]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="margin_tiles" type="ScrollContainer" parent="ctn_main"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ctn_available_tiles" type="VBoxContainer" parent="ctn_main/margin_tiles"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ctn_grid" type="VBoxContainer" parent="ctn_main"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 3.0
+
+[node name="ctn_settings" type="HBoxContainer" parent="ctn_main/ctn_grid"]
+layout_mode = 2
+theme_override_constants/separation = 15
+alignment = 1
+
+[node name="lbl_columns" type="Label" parent="ctn_main/ctn_grid/ctn_settings"]
+layout_mode = 2
+text = "Collumns"
+
+[node name="txt_collumns" type="LineEdit" parent="ctn_main/ctn_grid/ctn_settings"]
+layout_mode = 2
+text = "5"
+
+[node name="separator2" type="Control" parent="ctn_main/ctn_grid/ctn_settings"]
+layout_mode = 2
+
+[node name="lbl_rows" type="Label" parent="ctn_main/ctn_grid/ctn_settings"]
+layout_mode = 2
+text = "Rows"
+
+[node name="txt_rows" type="LineEdit" parent="ctn_main/ctn_grid/ctn_settings"]
+layout_mode = 2
+text = "5"
+
+[node name="btn_generate_grid" type="Button" parent="ctn_main/ctn_grid/ctn_settings"]
+layout_mode = 2
+text = "Create Grid"
+
+[node name="btn_print" type="Button" parent="ctn_main/ctn_grid/ctn_settings"]
+layout_mode = 2
+text = "Print Grid"
+
+[node name="btn_preset" type="Button" parent="ctn_main/ctn_grid/ctn_settings"]
+layout_mode = 2
+text = "Load Preset"
+
+[node name="separator3" type="Control" parent="ctn_main/ctn_grid/ctn_settings"]
+layout_mode = 2
+
+[node name="ctn_grid" parent="ctn_main/ctn_grid" instance=ExtResource("3_gnya5")]
+layout_mode = 2
+
+[node name="fd_load_preset" type="FileDialog" parent="ctn_main/ctn_grid"]
+initial_position = 2
+size = Vector2i(500, 400)

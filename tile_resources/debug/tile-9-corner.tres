@@ -5,6 +5,7 @@
 
 [resource]
 script = ExtResource("2_ssb5t")
+Id = 420371
 Prefab = ExtResource("1_hd0r0")
 TopConnectors = "EMPTY"
 RightConnectors = "EMPTY"
@@ -14,4 +15,5 @@ GenerateRotations = true
 LimitEnabled = false
 Limit = 1
 Positioning = 0
+RotationY = 0
 Weight = 1

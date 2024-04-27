@@ -1,6 +1,8 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using FileAccess = Godot.FileAccess;
 
 namespace WaveFunctionCollapse.Godot.Plugin;
 
@@ -8,8 +10,6 @@ namespace WaveFunctionCollapse.Godot.Plugin;
 public partial class GeneratorItem : Control
 {
 	private Generator Parent;
-
-	[Export] public PackedScene Snapshotter;
 
 	[Export] public Label lbl_FileName;
 	[Export] public TextureRect img_preview;
@@ -34,7 +34,7 @@ public partial class GeneratorItem : Control
 		btn_Generate.Pressed += GenerateResources;
 	}
 
-	public void Initialize(string fileName, string importFullPath, Generator parent, bool generateSnapshot)
+	public void Initialize(string fileName, string importFullPath, Generator parent)
 	{
 		Parent = parent;
 
@@ -42,25 +42,18 @@ public partial class GeneratorItem : Control
 
 		lbl_FileName.Text = fileName;
 
-		txt_ResourceName.Text = fileName.Split(".")[0];
+		txt_ResourceName.Text = fileName;
 
-		if (!generateSnapshot) return;
+		LoadSnapshot();
+	}
 
-		var tileInstance = ResourceLoader.Load<PackedScene>(importFullPath).Instantiate<Node3D>();
+	public void LoadSnapshot()
+	{
+		var snapshotPath = Path.Combine(Main.SNAPSHOTS_PATH, lbl_FileName.Text + "-snapshot.png");
 
-		AddChild(tileInstance);
+		if (!FileAccess.FileExists(snapshotPath)) return;
 
-		var snapshotterInstance = Snapshotter.Instantiate<TileSnapshotter>();
-
-		tileInstance.AddChild(snapshotterInstance);
-
-		snapshotterInstance.Initialize("res://addons/wave_function_collapse/test/" + fileName +
-		                               "-snapshot.png");
-
-		GetTree().CreateTimer(1f).Timeout += () =>
-		{
-			img_preview.Texture = ResourceLoader.Load<Texture2D>("res://addons/wave_function_collapse/test/" + fileName + "-snapshot.png");
-		};
+		img_preview.Texture = ResourceLoader.Load<Texture2D>(snapshotPath);
 	}
 
 	private void GenerateResources()
@@ -78,7 +71,7 @@ public partial class GeneratorItem : Control
 
 		if (btn_GenerateRotations.ButtonPressed)
 		{
-			var rotations = RotationsFor(tile);
+			var rotations = RotationsFor(tile, btn_IsSymmetric.ButtonPressed);
 
 			foreach (var rotation in rotations)
 			{
@@ -89,14 +82,14 @@ public partial class GeneratorItem : Control
 
 	public void SaveTile(GodotTile tile)
 	{
-		var fileName = tile.RotationY == 0 ? txt_ResourceName.Text : $"{txt_ResourceName.Text}-{tile.RotationY}";
+		var fileName = $"{txt_ResourceName.Text}-{tile.RotationY}";
 
 		var filePath = Parent.txt_ExportDestination.Text + fileName + ".tres";
 
 		ResourceSaver.Save(tile, filePath);
 	}
 
-	public static IEnumerable<GodotTile> RotationsFor(GodotTile tile)
+	public static IEnumerable<GodotTile> RotationsFor(GodotTile tile, bool isSymmetric)
 	{
 		var result = new List<GodotTile>();
 
@@ -105,7 +98,9 @@ public partial class GeneratorItem : Control
 			tile.TopConnectors, tile.RightConnectors, tile.BottomConnectors, tile.LeftConnectors
 		};
 
-		for (int i = 1; i < 4; i++)
+		var iterations = isSymmetric ? 2 : 4;
+
+		for (int i = 1; i < iterations; i++)
 		{
 			var lastElement = connections[^1];
 

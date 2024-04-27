@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="GodotTile" load_steps=3 format=3]
+
+[ext_resource type="PackedScene" path="res://imports/tiles/ground_pathSideOpen.glb" id="1_8grvp"]
+[ext_resource type="Script" path="res://WaveFunctionCollapse.Godot/GodotTile.cs" id="2_ck1dr"]
+
+[resource]
+script = ExtResource("2_ck1dr")
+Id = 367469
+Prefab = ExtResource("1_8grvp")
+TopConnectors = "BBB"
+RightConnectors = "BBA"
+BottomConnectors = "ABA"
+LeftConnectors = "ABB"
+GenerateRotations = false
+LimitEnabled = false
+Limit = 1
+Positioning = 0
+RotationY = 0
+Weight = 1

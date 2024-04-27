@@ -1,0 +1,24 @@
+[gd_scene load_steps=3 format=3 uid="uid://bbxym3a8fprkt"]
+
+[ext_resource type="Script" path="res://addons/wave_function_collapse/features/map_preset/MapGrid.cs" id="1_ycwmj"]
+[ext_resource type="PackedScene" uid="uid://cbu28rut2n1t2" path="res://addons/wave_function_collapse/features/map_preset/map_grid_row.tscn" id="2_j1uw6"]
+
+[node name="margin" type="MarginContainer" node_paths=PackedStringArray("ctn_Grid")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_ycwmj")
+CollumnScene = ExtResource("2_j1uw6")
+ctn_Grid = NodePath("scroll/ctn_grid")
+
+[node name="scroll" type="ScrollContainer" parent="."]
+layout_mode = 2
+
+[node name="ctn_grid" type="VBoxContainer" parent="scroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3

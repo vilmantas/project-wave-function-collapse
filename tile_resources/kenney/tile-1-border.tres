@@ -5,6 +5,7 @@
 
 [resource]
 script = ExtResource("1_brpw2")
+Id = 613947
 Prefab = ExtResource("1_6hp2s")
 TopConnectors = "AAA"
 RightConnectors = "ABB"
@@ -14,4 +15,5 @@ GenerateRotations = true
 LimitEnabled = false
 Limit = 1
 Positioning = 0
+RotationY = 0
 Weight = 1

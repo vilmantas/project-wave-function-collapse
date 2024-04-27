@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="GodotTile" load_steps=3 format=3]
+
+[ext_resource type="PackedScene" path="res://imports/tiles/ground_grass.glb" id="1_7mblq"]
+[ext_resource type="Script" path="res://WaveFunctionCollapse.Godot/GodotTile.cs" id="2_tsxmr"]
+
+[resource]
+script = ExtResource("2_tsxmr")
+Prefab = ExtResource("1_7mblq")
+TopConnectors = "AAA"
+RightConnectors = "AAA"
+BottomConnectors = "AAA"
+LeftConnectors = "AAA"
+GenerateRotations = false
+LimitEnabled = false
+Limit = 1
+Positioning = 0
+Weight = 1

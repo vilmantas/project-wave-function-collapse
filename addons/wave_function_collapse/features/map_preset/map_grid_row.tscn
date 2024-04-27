@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://cbu28rut2n1t2"]
+
+[ext_resource type="Script" path="res://addons/wave_function_collapse/features/map_preset/MapGridRow.cs" id="1_7a6ji"]
+[ext_resource type="PackedScene" uid="uid://b4tftk71bprwq" path="res://addons/wave_function_collapse/features/map_preset/map_tile.tscn" id="2_xb6sr"]
+
+[node name="HBoxContainer" type="HBoxContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_7a6ji")
+TileScene = ExtResource("2_xb6sr")

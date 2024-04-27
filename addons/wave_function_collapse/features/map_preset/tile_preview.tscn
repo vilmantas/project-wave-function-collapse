@@ -1,0 +1,47 @@
+[gd_scene load_steps=3 format=3 uid="uid://4x78mhxrpyi0"]
+
+[ext_resource type="Script" path="res://addons/wave_function_collapse/features/map_preset/TilePreview.cs" id="1_dd3fo"]
+[ext_resource type="Texture2D" uid="uid://btegahyb0l5m4" path="res://addons/wave_function_collapse/artifacts/snapshots/ground_pathCornerSmall-snapshot.png" id="2_urrhq"]
+
+[node name="tile" type="HBoxContainer" node_paths=PackedStringArray("lbl_Id", "lbl_TileName", "img_Preview", "btn_Select")]
+custom_minimum_size = Vector2(250, 0)
+offset_right = 317.0
+offset_bottom = 64.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_dd3fo")
+lbl_Id = NodePath("lbl_id")
+lbl_TileName = NodePath("lbl_name")
+img_Preview = NodePath("ctn_image/img_snapshot")
+btn_Select = NodePath("btn_select")
+
+[node name="ctn_image" type="Control" parent="."]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="img_snapshot" type="TextureRect" parent="ctn_image"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+offset_right = 64.0
+offset_bottom = 64.0
+pivot_offset = Vector2(32, 32)
+texture = ExtResource("2_urrhq")
+expand_mode = 4
+stretch_mode = 4
+
+[node name="lbl_id" type="Label" parent="."]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "65489"
+
+[node name="lbl_name" type="Label" parent="."]
+layout_mode = 2
+size_flags_horizontal = 2
+text = "ground_grassFlat"
+
+[node name="btn_select" type="Button" parent="."]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+text = "SELECT"

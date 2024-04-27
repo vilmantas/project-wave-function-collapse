@@ -1,0 +1,42 @@
+[gd_scene load_steps=6 format=3 uid="uid://ccoir205txayt"]
+
+[ext_resource type="Script" path="res://addons/wave_function_collapse/features/generator/SnapshotsGenerator.cs" id="1_0imgm"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_p1k4j"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_o0ncn"]
+sky_material = SubResource("ProceduralSkyMaterial_p1k4j")
+
+[sub_resource type="Environment" id="Environment_0635t"]
+background_mode = 2
+sky = SubResource("Sky_o0ncn")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_hju0s"]
+viewport_path = NodePath("SubViewport")
+
+[node name="Snapshotter" type="Node3D" node_paths=PackedStringArray("Camera", "TextureViewport")]
+script = ExtResource("1_0imgm")
+Tiles = []
+Camera = NodePath("SubViewport/Camera3D")
+TextureViewport = NodePath("SubViewport")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_0635t")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+shadow_enabled = true
+
+[node name="SubViewport" type="SubViewport" parent="."]
+transparent_bg = true
+
+[node name="Camera3D" type="Camera3D" parent="SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 0.980148, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-243, -241)
+texture = SubResource("ViewportTexture_hju0s")

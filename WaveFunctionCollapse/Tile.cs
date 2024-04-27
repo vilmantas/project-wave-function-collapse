@@ -4,6 +4,7 @@ namespace WaveFunctionCollapse;
 
 public class Tile
 {
+    public int Id;
     public string Name;
     public string TopConnectors;
     public string RightConnectors;
@@ -27,6 +28,7 @@ public class Tile
     {
         return new Tile
         {
+            Id = Id,
             Name = Name,
             TopConnectors = TopConnectors,
             RightConnectors = RightConnectors,

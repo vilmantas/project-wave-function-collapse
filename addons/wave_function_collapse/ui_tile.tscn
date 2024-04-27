@@ -1,21 +1,30 @@
-[gd_scene load_steps=3 format=3 uid="uid://d3y06yjmvxdcp"]
+[gd_scene load_steps=5 format=3 uid="uid://d3y06yjmvxdcp"]
 
 [ext_resource type="Script" path="res://addons/wave_function_collapse/Tile.cs" id="1_6nsgd"]
+[ext_resource type="Texture2D" uid="uid://bw2ycqhyw3yoj" path="res://addons/wave_function_collapse/snapshot-placeholder.png" id="2_xnxyy"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_la0d5"]
 
-[node name="UI" type="Control" node_paths=PackedStringArray("txt_TopConnectors", "txt_RightConnectors", "txt_BottomConnectors", "txt_LeftConnectors", "lbl_Title")]
-custom_minimum_size = Vector2(250, 400)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g2p7h"]
+bg_color = Color(0.309804, 0.819608, 0.4, 1)
+
+[node name="UI" type="Control" node_paths=PackedStringArray("txt_TopConnectors", "txt_RightConnectors", "txt_BottomConnectors", "txt_LeftConnectors", "lbl_Title", "img_Preview")]
+custom_minimum_size = Vector2(420, 480)
 layout_mode = 3
-anchors_preset = 0
-offset_right = 250.0
-offset_bottom = 400.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 script = ExtResource("1_6nsgd")
-txt_TopConnectors = NodePath("txt_top")
-txt_RightConnectors = NodePath("txt_right")
-txt_BottomConnectors = NodePath("txt_bottom")
-txt_LeftConnectors = NodePath("txt_left")
-lbl_Title = NodePath("lbl_title")
+txt_TopConnectors = NodePath("ctn_main/margin/ctn_grid/row_1/t2/txt_top")
+txt_RightConnectors = NodePath("ctn_main/margin/ctn_grid/row_2/t3/txt_right")
+txt_BottomConnectors = NodePath("ctn_main/margin/ctn_grid/row_3/t2/txt_bottom")
+txt_LeftConnectors = NodePath("ctn_main/margin/ctn_grid/row_2/t1/txt_left")
+lbl_Title = NodePath("ctn_main/lbl_title")
+img_Preview = NodePath("ctn_main/margin/ctn_grid/row_2/t2/img_preview")
 
 [node name="background" type="Panel" parent="."]
 layout_mode = 1
@@ -26,83 +35,148 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_la0d5")
 
-[node name="lbl_title" type="Label" parent="."]
+[node name="ctn_main" type="BoxContainer" parent="."]
 layout_mode = 1
-anchors_preset = 10
+anchors_preset = 15
 anchor_right = 1.0
-offset_top = 6.0
-offset_bottom = 29.0
+anchor_bottom = 1.0
 grow_horizontal = 2
+grow_vertical = 2
+vertical = true
+
+[node name="lbl_title" type="Label" parent="ctn_main"]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_font_sizes/font_size = 32
 text = "File Name"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
 
-[node name="txt_top" type="LineEdit" parent="."]
+[node name="margin" type="MarginContainer" parent="ctn_main"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="ctn_grid" type="BoxContainer" parent="ctn_main/margin"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+vertical = true
+
+[node name="row_1" type="BoxContainer" parent="ctn_main/margin/ctn_grid"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="t1" type="Panel" parent="ctn_main/margin/ctn_grid/row_1"]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="t2" type="Panel" parent="ctn_main/margin/ctn_grid/row_1"]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_g2p7h")
+
+[node name="txt_top" type="LineEdit" parent="ctn_main/margin/ctn_grid/row_1/t2"]
 layout_mode = 1
-anchors_preset = 10
+anchors_preset = 15
 anchor_right = 1.0
-offset_left = 40.0
-offset_top = 77.0
-offset_right = -42.9375
-offset_bottom = 108.0
-grow_horizontal = 2
-text = "ABC"
-alignment = 1
-
-[node name="txt_right" type="LineEdit" parent="."]
-layout_mode = 1
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -67.0625
-offset_top = -15.5
-offset_bottom = 15.5
-grow_horizontal = 0
-grow_vertical = 2
-text = "ABC"
-alignment = 1
-
-[node name="txt_bottom" type="LineEdit" parent="."]
-layout_mode = 1
-anchors_preset = 14
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = 40.0
-offset_top = 37.0
-offset_right = -42.9375
-offset_bottom = 68.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "ABC"
-alignment = 1
-
-[node name="txt_left" type="LineEdit" parent="."]
-layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_top = -15.5
-offset_right = 67.0625
-offset_bottom = 15.5
-grow_vertical = 2
-text = "ABC"
-alignment = 1
-
-[node name="btn_save" type="Button" parent="."]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -54.0
-offset_top = -45.0
-offset_right = 54.0
-offset_bottom = -14.0
 grow_horizontal = 2
-grow_vertical = 0
-text = "Save"
+grow_vertical = 2
+placeholder_text = "Top"
+alignment = 1
+
+[node name="t3" type="Panel" parent="ctn_main/margin/ctn_grid/row_1"]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+
+[node name="row_2" type="BoxContainer" parent="ctn_main/margin/ctn_grid"]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="t1" type="Panel" parent="ctn_main/margin/ctn_grid/row_2"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_g2p7h")
+
+[node name="txt_left" type="LineEdit" parent="ctn_main/margin/ctn_grid/row_2/t1"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+placeholder_text = "Left"
+alignment = 1
+
+[node name="t2" type="Panel" parent="ctn_main/margin/ctn_grid/row_2"]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_g2p7h")
+
+[node name="img_preview" type="TextureRect" parent="ctn_main/margin/ctn_grid/row_2/t2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(187, 92)
+texture = ExtResource("2_xnxyy")
+expand_mode = 1
+
+[node name="t3" type="Panel" parent="ctn_main/margin/ctn_grid/row_2"]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_g2p7h")
+
+[node name="txt_right" type="LineEdit" parent="ctn_main/margin/ctn_grid/row_2/t3"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+placeholder_text = "Right"
+alignment = 1
+
+[node name="row_3" type="BoxContainer" parent="ctn_main/margin/ctn_grid"]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="t1" type="Panel" parent="ctn_main/margin/ctn_grid/row_3"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="t2" type="Panel" parent="ctn_main/margin/ctn_grid/row_3"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_g2p7h")
+
+[node name="txt_bottom" type="LineEdit" parent="ctn_main/margin/ctn_grid/row_3/t2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+placeholder_text = "Bottom"
+alignment = 1
+
+[node name="t3" type="Panel" parent="ctn_main/margin/ctn_grid/row_3"]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+size_flags_horizontal = 3

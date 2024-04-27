@@ -1,0 +1,59 @@
+[gd_scene load_steps=3 format=3 uid="uid://b4tftk71bprwq"]
+
+[ext_resource type="Script" path="res://addons/wave_function_collapse/features/map_preset/MapTile.cs" id="1_0oksf"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oth8c"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[node name="MapTile" type="Control" node_paths=PackedStringArray("lbl_Coords", "img_Preview", "btn_Tile")]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_0oksf")
+lbl_Coords = NodePath("lbl_coords")
+img_Preview = NodePath("img_preview")
+btn_Tile = NodePath("btn_tile")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="lbl_coords" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "1,1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="img_preview" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 4
+stretch_mode = 4
+
+[node name="btn_tile" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_oth8c")

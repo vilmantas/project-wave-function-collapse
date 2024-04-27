@@ -1,8 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://dprinkigkmjrr"]
+[gd_scene load_steps=4 format=3 uid="uid://dprinkigkmjrr"]
 
 [ext_resource type="Script" path="res://addons/wave_function_collapse/features/generator/GeneratorItem.cs" id="1_i6r7w"]
-[ext_resource type="PackedScene" uid="uid://by6gmy7ajf810" path="res://addons/wave_function_collapse/features/tile_snapshot/tile_snapshot.tscn" id="2_jv2wu"]
-[ext_resource type="Texture2D" uid="uid://bhclkpo61rohg" path="res://addons/wave_function_collapse/test/ground_grass.glb-snapshot.png" id="3_lgdkg"]
+[ext_resource type="Texture2D" uid="uid://bw2ycqhyw3yoj" path="res://addons/wave_function_collapse/snapshot-placeholder.png" id="3_pku88"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_plsta"]
 bg_color = Color(0.490196, 0.666667, 0.176471, 1)
@@ -18,7 +17,6 @@ grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("1_i6r7w")
-Snapshotter = ExtResource("2_jv2wu")
 lbl_FileName = NodePath("margin/list/lbl_file_name")
 img_preview = NodePath("margin/list/img_preview")
 txt_TopConnectors = NodePath("margin/list/txt_top_connectors")
@@ -58,15 +56,19 @@ theme_override_constants/separation = 10
 
 [node name="lbl_file_name" type="Label" parent="margin/list"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 26
+theme_override_font_sizes/font_size = 16
 text = "File Name"
+horizontal_alignment = 1
+vertical_alignment = 1
 autowrap_mode = 3
 
 [node name="img_preview" type="TextureRect" parent="margin/list"]
+custom_minimum_size = Vector2(256, 0)
 layout_mode = 2
+size_flags_horizontal = 4
 size_flags_vertical = 3
-texture = ExtResource("3_lgdkg")
-expand_mode = 1
+texture = ExtResource("3_pku88")
+expand_mode = 3
 
 [node name="separator" type="Control" parent="margin/list"]
 layout_mode = 2
@@ -89,10 +91,13 @@ placeholder_text = "Left Connectors"
 
 [node name="btn_generate_rotations" type="CheckButton" parent="margin/list"]
 layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
 text = "Generate Rotations"
 
 [node name="btn_is_symmetric" type="CheckButton" parent="margin/list"]
 layout_mode = 2
+size_flags_horizontal = 0
 text = "Tile Symmetric"
 
 [node name="btn_override_existing" type="CheckButton" parent="margin/list"]

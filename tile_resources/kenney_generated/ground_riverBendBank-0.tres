@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="GodotTile" load_steps=3 format=3]
+
+[ext_resource type="PackedScene" path="res://imports/tiles/ground_riverBendBank.glb" id="1_7nmmr"]
+[ext_resource type="Script" path="res://WaveFunctionCollapse.Godot/GodotTile.cs" id="2_4amiy"]
+
+[resource]
+script = ExtResource("2_4amiy")
+Id = 493296
+Prefab = ExtResource("1_7nmmr")
+TopConnectors = "AAA"
+RightConnectors = "ACA"
+BottomConnectors = "ACA"
+LeftConnectors = "AAA"
+GenerateRotations = false
+LimitEnabled = false
+Limit = 1
+Positioning = 0
+RotationY = 0
+Weight = 1

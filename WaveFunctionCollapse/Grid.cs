@@ -9,17 +9,14 @@ public class Grid
 
     public readonly Cell[,] Cells;
 
-    public readonly int GridSizeX = -1;
+    public readonly int GridSizeX;
 
-    public readonly int GridSizeY = -1;
+    public readonly int GridSizeY;
 
     public (int x, int y) DimensionsFromIndex(int i) => (i % Cells.GetLength(1), i / Cells.GetLength(1));
     public int IndexFromDimensions(int x, int y) => y * Cells.GetLength(1) + x;
-
     public bool IsCollapsed => Cells.Cast<Cell>().All(x => x.IsCollapsed);
-
     public Cell this[int x, int y] => Cells[y, x];
-
     public Cell this[int i]
      {
          get
@@ -74,7 +71,9 @@ public class Grid
 
                 var cell = this[x, y];
 
-                cell.Options = new List<Tile> { AvailableTiles[preset[y, x]] };
+                var tile = AvailableTiles.First(t => t.Id == preset[y, x]);
+
+                cell.Options = new List<Tile> { tile };
                 cell.IsCollapsed = true;
             }
         }
@@ -93,7 +92,7 @@ public class Grid
 
     public Cell[] CollapsedCells() => Cells.Cast<Cell>().Where(x => x.IsCollapsed).ToArray();
 
-    public Cell[] Corners() => new Cell[] { this[0, 0], this[0, Cells.GetLength(0) - 1], this[Cells.GetLength(1) - 1, 0], this[Cells.GetLength(1) - 1, Cells.GetLength(0) - 1] };
+    public Cell[] Corners() => new [] { this[0, 0], this[0, Cells.GetLength(0) - 1], this[Cells.GetLength(1) - 1, 0], this[Cells.GetLength(1) - 1, Cells.GetLength(0) - 1] };
 
     public Cell[] Borders() => Cells.Cast<Cell>().Where(x => x.Neighbours.Count(y => y == null) == 1).ToArray();
 

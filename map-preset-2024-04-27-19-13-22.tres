@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="GodotMapPreset" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://WaveFunctionCollapse.Godot/GodotMapPreset.cs" id="1_12pmn"]
+
+[resource]
+script = ExtResource("1_12pmn")
+Preset = "216589 210062 68270 -1 -1 
+575042 575042 279531 -1 -1 
+164055 32183 274083 207480 -1 
+952757 -1 -1 -1 -1 
+995756 -1 -1 -1 -1 
+-1 -1 -1 -1 -1 
+-1 -1 -1 -1 -1 
+"

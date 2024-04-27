@@ -5,6 +5,7 @@ namespace WaveFunctionCollapse.Godot;
 [GlobalClass, Tool]
 public partial class GodotTile : Resource
 {
+    [Export] public int Id = new RandomNumberGenerator().RandiRange(0, 1000000);
     [Export] public PackedScene Prefab;
     [Export] public string TopConnectors;
     [Export] public string RightConnectors;
@@ -17,7 +18,7 @@ public partial class GodotTile : Resource
 
     [Export] public PositionMode Positioning = PositionMode.All;
 
-    public int RotationY;
+    [Export] public int RotationY;
 
     [Export] public int Weight { get; set; } = 1;
 

@@ -1,0 +1,70 @@
+[gd_scene load_steps=3 format=3 uid="uid://lo475wlovgxn"]
+
+[ext_resource type="Script" path="res://addons/wave_function_collapse/features/importer/Importer.cs" id="1_14s4f"]
+[ext_resource type="PackedScene" uid="uid://d3y06yjmvxdcp" path="res://addons/wave_function_collapse/ui_tile.tscn" id="2_51mt5"]
+
+[node name="Control" type="VBoxContainer" node_paths=PackedStringArray("ctn_Tiles", "txt_ImportLocation", "btn_Import")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_14s4f")
+ctn_Tiles = NodePath("scroll/margin/ctn_tiles")
+TileScene = ExtResource("2_51mt5")
+txt_ImportLocation = NodePath("ctn_import/txt_imports")
+btn_Import = NodePath("ctn_import/btn_import")
+
+[node name="ctn_import" type="HBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_override_constants/separation = 20
+
+[node name="splitter_1" type="Control" parent="ctn_import"]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+
+[node name="lbl_imports" type="Label" parent="ctn_import"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Tile Resources Directory"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="txt_imports" type="LineEdit" parent="ctn_import"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+text = "res://tile_resources/kenney_generated"
+placeholder_text = "Folder with .tres files"
+
+[node name="btn_import" type="Button" parent="ctn_import"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "Load Resources"
+
+[node name="splitter_2" type="Control" parent="ctn_import"]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+
+[node name="scroll" type="ScrollContainer" parent="."]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="margin" type="MarginContainer" parent="scroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 20
+
+[node name="ctn_tiles" type="FlowContainer" parent="scroll/margin"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/h_separation = 10
+theme_override_constants/v_separation = 10

@@ -11,17 +11,13 @@ config_version=5
 [application]
 
 config/name="project-wave-function-collapse"
-run/main_scene="res://main.tscn"
+run/main_scene="res://addons/wave_function_collapse/features/map_preset/map_preset.tscn"
 config/features=PackedStringArray("4.2", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 
 [dotnet]
 
 project/assembly_name="project-wave-function-collapse"
-
-[editor_plugins]
-
-enabled=PackedStringArray("res://addons/wave_function_collapse/plugin.cfg")
 
 [input]
 
