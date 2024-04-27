@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" path="res://scripts/Main.cs" id="1_dait1"]
 [ext_resource type="PackedScene" uid="uid://311uoi36spp" path="res://prefabs/tile_debug.tscn" id="2_45hqa"]
-[ext_resource type="Resource" uid="uid://nrfa1sf5re45" path="res://tile_resources/AllTiles.tres" id="3_2l5ya"]
 [ext_resource type="Script" path="res://scripts/CameraFreeLookController.cs" id="3_knhmc"]
+[ext_resource type="Resource" uid="uid://bmkolb6v1451" path="res://tiles-2024-04-27-19-12-50.tres" id="3_wev4l"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_8utej"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -35,9 +35,9 @@ ReuseGridText = NodePath("ReuseGridText")
 CellDebugLabel = NodePath("CellDebugLabel")
 TileDebugPrefab = ExtResource("2_45hqa")
 SaveSeedButton = NodePath("SetSeed")
-Configuration = ExtResource("3_2l5ya")
+Configuration = ExtResource("3_wev4l")
 GridSizeX = 10
-GridSizeY = 5
+GridSizeY = 10
 Container = NodePath("container")
 RandomSeedLabel = NodePath("SeedLabel")
 SeedTextLabel = NodePath("SeedInput")

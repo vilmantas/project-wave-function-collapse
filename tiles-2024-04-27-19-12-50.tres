@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="GodotTiles" load_steps=92 format=3]
+[gd_resource type="Resource" script_class="GodotTiles" load_steps=92 format=3 uid="uid://bmkolb6v1451"]
 
 [ext_resource type="Resource" path="res://tile_resources/kenney_generated/ground_grass-0.tres" id="1_8th5u"]
 [ext_resource type="Resource" path="res://tile_resources/kenney_generated/ground_pathBend-0.tres" id="2_5fktd"]
